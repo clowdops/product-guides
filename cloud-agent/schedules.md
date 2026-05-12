@@ -13,7 +13,7 @@ Open the **Schedules** tab inside any sandbox to manage schedules.
 
 ## Creating a schedule
 
-![Create schedule form — frequency presets and custom cron option](./images/cloud-agent-schedules-create-form.png)
+<!-- Screenshot: ![Create schedule form — frequency presets and custom cron option](./images/cloud-agent-schedules-create-form.png) -->
 
 ### Step 1: Open the dialog
 

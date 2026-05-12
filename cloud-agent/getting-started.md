@@ -28,7 +28,7 @@ A **project** groups related sandboxes. Give it a descriptive name (for example 
 
 A **sandbox** is the execution environment where the agent runs. It holds your credentials, templates, and run history. Name it to reflect its scope (for example `AWS prod` or `GCP analytics`).
 
-![Onboarding wizard — creating the first sandbox](./images/cloud-agent-onboarding-create-sandbox.png)
+<!-- Screenshot: ![Onboarding wizard — creating the first sandbox](./images/cloud-agent-onboarding-create-sandbox.png) -->
 
 ### Step 5: You are in
 

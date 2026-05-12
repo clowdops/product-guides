@@ -6,7 +6,7 @@
 
 The **Runs** tab gives you a unified audit log of every agent execution in the sandbox — whether it was triggered by a chat message, a template run, or a scheduled task.
 
-![Runs tab — source filter, status badges, token count, and cost columns](./images/cloud-agent-runs-list.png)
+<!-- Screenshot: ![Runs tab — source filter, status badges, token count, and cost columns](./images/cloud-agent-runs-list.png) -->
 
 ## Columns
 

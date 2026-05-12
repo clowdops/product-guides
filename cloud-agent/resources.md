@@ -6,7 +6,7 @@
 
 The **Resources** tab gives you a live inventory of the cloud resources the agent has discovered in your sandbox. It is read-only from the UI — the agent populates it automatically as it explores your infrastructure.
 
-![Resource tree — hierarchical view grouped by provider and account](./images/cloud-agent-resources-tree.png)
+<!-- Screenshot: ![Resource tree — hierarchical view grouped by provider and account](./images/cloud-agent-resources-tree.png) -->
 
 ## Resource tree
 
@@ -47,7 +47,7 @@ Use the **Pivot** button on any dependency to jump directly to that resource's d
 
 ## Dependency graph
 
-![Dependency subgraph for a selected resource](./images/cloud-agent-resources-dependency-graph.png)
+<!-- Screenshot: ![Dependency subgraph for a selected resource](./images/cloud-agent-resources-dependency-graph.png) -->
 
 The dependency graph visualises the relationships around a selected resource — useful for understanding blast radius before making changes or for troubleshooting connectivity issues.
 

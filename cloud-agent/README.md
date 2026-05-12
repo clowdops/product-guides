@@ -28,5 +28,3 @@ Cloud Agent is a chat-oriented interface for running AI agents against your clou
 | [Runs & History](runs.md) | Audit executions, tokens, and cost |
 | [Cloud Resources](resources.md) | Explore the discovered resource inventory |
 | [Team & Settings](team-and-settings.md) | Members, billing, and account settings |
-
-Screenshots referenced in these pages should live in [`images/`](images/) (same filenames as in the docs) so image links resolve on GitHub.

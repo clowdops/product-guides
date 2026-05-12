@@ -6,7 +6,7 @@
 
 Chat is the primary way to interact with Cloud Agent. Every conversation runs within the currently selected sandbox, using the credentials and context bound to it.
 
-![Cloud Agent — main chat interface](./images/cloud-agent-chat-main-ui.png)
+<!-- Screenshot: ![Cloud Agent — main chat interface](./images/cloud-agent-chat-main-ui.png) -->
 
 ## Starting a conversation
 
@@ -24,7 +24,7 @@ The agent figures out what steps are needed, plans them, executes them, and retu
 
 After you send a message, the agent progresses through a set of phases shown in real time:
 
-![Execution phases visible during an agent turn](./images/cloud-agent-chat-execution-phases.png)
+<!-- Screenshot: ![Execution phases visible during an agent turn](./images/cloud-agent-chat-execution-phases.png) -->
 
 | Phase | What is happening |
 | --- | --- |

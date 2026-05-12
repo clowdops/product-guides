@@ -34,7 +34,7 @@ Cloud credentials grant the agent access to your infrastructure. Supported provi
 | **GitLab** | VCS | Personal access token, Host URL |
 | **Azure DevOps** | VCS | Organisation URL, Personal access token |
 
-![Cloud tab — connecting infrastructure providers](./images/cloud-agent-credentials-cloud-tab.png)
+<!-- Screenshot: ![Cloud tab — connecting infrastructure providers](./images/cloud-agent-credentials-cloud-tab.png) -->
 
 To add a cloud credential:
 
@@ -49,7 +49,7 @@ Credentials you create at the project level are reusable across sandboxes. From 
 
 AI credentials let the agent call LLM APIs on your behalf (OpenAI, Anthropic, Google Gemini, AWS Bedrock, and so on).
 
-![AI tab — connecting LLM providers](./images/cloud-agent-credentials-ai-tab.png)
+<!-- Screenshot: ![AI tab — connecting LLM providers](./images/cloud-agent-credentials-ai-tab.png) -->
 
 The process is identical to cloud credentials: add, fill provider fields, save, and associate with the sandbox.
 

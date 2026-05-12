@@ -8,7 +8,7 @@ Templates are saved, reusable prompts. Instead of typing the same request in cha
 
 Open the **Templates** tab inside any sandbox to manage templates.
 
-![Templates tab — system templates (read-only) and custom templates](./images/cloud-agent-templates-list.png)
+<!-- Screenshot: ![Templates tab — system templates (read-only) and custom templates](./images/cloud-agent-templates-list.png) -->
 
 ## System templates vs custom templates
 
@@ -21,7 +21,7 @@ System templates are pre-built workflows provided by the platform. They appear a
 
 ## Creating a template
 
-![Create template dialog](./images/cloud-agent-templates-create-form.png)
+<!-- Screenshot: ![Create template dialog](./images/cloud-agent-templates-create-form.png) -->
 
 ### Step 1: Open the create dialog
 
