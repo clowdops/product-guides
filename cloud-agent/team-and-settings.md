@@ -1,8 +1,8 @@
----
-icon: gear
----
+[← Cloud Agent](README.md) · [← Resources](resources.md)
 
 # Team & Settings
+
+**On this page:** [Profile](#profile) · [Security](#security) · [Organisation](#organisation) · [Members](#members) · [Plan & Billing](#plan--billing) · [Usage](#usage) · [Activity](#activity)
 
 Access organisation-wide settings and your account via the **Settings** icon at the bottom of the left sidebar.
 
@@ -14,9 +14,9 @@ Update your display name, email address, and avatar under **Profile**.
 
 Manage multi-factor authentication under **Security**:
 
-* Enrol a TOTP authenticator app or a passkey (WebAuthn)
-* Activate magic-link login as an alternative method
-* Review or revoke trusted devices
+- Enrol a TOTP authenticator app or a passkey (WebAuthn)
+- Activate magic-link login as an alternative method
+- Review or revoke trusted devices
 
 ## Organisation
 
@@ -38,7 +38,7 @@ The invitee receives an email with a join link. They must create an account (or 
 ### Roles
 
 | Role | Access level |
-|---|---|
+| --- | --- |
 | **Admin** | Full access: manage members, billing, all projects and sandboxes |
 | **Member** | Access to projects and sandboxes they are invited to |
 
@@ -52,9 +52,8 @@ Review your current subscription plan under **Plan**. Upgrade, downgrade, or can
 
 Cloud Agent uses a credit system for AI execution costs. View your current balance and transaction history under **Usage**.
 
-{% hint style="info" %}
-Credits are consumed per run based on the number of tokens used and the models invoked. The **Runs** tab shows per-run cost estimates; the **Usage** page shows aggregate consumption over time.
-{% endhint %}
+> [!NOTE]
+> Credits are consumed per run based on the number of tokens used and the models invoked. The **Runs** tab shows per-run cost estimates; the **Usage** page shows aggregate consumption over time.
 
 ## Usage
 

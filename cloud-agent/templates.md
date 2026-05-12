@@ -1,19 +1,19 @@
----
-icon: rectangle-code
----
+[← Cloud Agent](README.md) · [← Chat](chat.md) · [Schedules →](schedules.md)
 
 # Templates
+
+**On this page:** [System vs custom templates](#system-templates-vs-custom-templates) · [Creating a template](#creating-a-template) · [Running a template manually](#running-a-template-manually)
 
 Templates are saved, reusable prompts. Instead of typing the same request in chat each time, you define it once as a template, then run it on demand or schedule it to run automatically.
 
 Open the **Templates** tab inside any sandbox to manage templates.
 
-<figure><img src="../.gitbook/assets/cloud-agent-templates-list.png" alt=""><figcaption>Templates tab — system templates (read-only) and custom templates</figcaption></figure>
+![Templates tab — system templates (read-only) and custom templates](./images/cloud-agent-templates-list.png)
 
-## System templates vs. custom templates
+## System templates vs custom templates
 
 | Type | Created by | Editable | Deletable |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **System templates** | The platform | No | No |
 | **Custom templates** | You | Yes | Yes |
 
@@ -21,34 +21,25 @@ System templates are pre-built workflows provided by the platform. They appear a
 
 ## Creating a template
 
-<figure><img src="../.gitbook/assets/cloud-agent-templates-create-form.png" alt=""><figcaption>Create template dialog</figcaption></figure>
+![Create template dialog](./images/cloud-agent-templates-create-form.png)
 
-{% stepper %}
-{% step %}
-### Open the create dialog
+### Step 1: Open the create dialog
 
 Click **New template** in the Templates tab.
-{% endstep %}
 
-{% step %}
-### Fill in the details
+### Step 2: Fill in the details
 
-* **Name** — a short, descriptive label (e.g., `S3 Public Access Audit`)
-* **Description** — optional. Explains what the template does; shown in the list.
-* **System prompt** — the full instruction for the agent. Write it exactly as you would in chat, but in a reusable form.
-{% endstep %}
+- **Name** — a short, descriptive label (for example `S3 Public Access Audit`)
+- **Description** — optional. Explains what the template does; shown in the list.
+- **System prompt** — the full instruction for the agent. Write it exactly as you would in chat, but in a reusable form.
 
-{% step %}
-### Save
+### Step 3: Save
 
 Click **Create**. The template appears in your custom templates list.
-{% endstep %}
-{% endstepper %}
 
 ## Running a template manually
 
 Click **Run** next to any template. This opens a new chat session and immediately submits the template prompt to the agent, exactly as if you had typed it. The resulting run appears in the [Runs & History](runs.md) list with source **Template**.
 
-{% hint style="info" %}
-To schedule a template to run automatically on a recurring basis, see [Scheduled Runs](schedules.md).
-{% endhint %}
+> [!TIP]
+> To schedule a template to run automatically on a recurring basis, see [Scheduled Runs](schedules.md).
