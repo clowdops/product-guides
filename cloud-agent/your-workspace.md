@@ -2,7 +2,7 @@
 
 # Projects, Sandboxes & Credentials
 
-**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials)
+**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [How your keys stay private at rest](#how-your-keys-stay-private-at-rest) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials)
 
 ## Projects and sandboxes
 
@@ -19,6 +19,14 @@ Switch between projects and sandboxes at any time using the dropdowns at the top
 Credentials connect the agent to your cloud providers and AI APIs. They are stored encrypted and never exposed in plaintext after creation.
 
 Open the **Credentials** tab inside any sandbox to manage them.
+
+### How your keys stay private at rest
+
+Your cloud and AI credentials are not “one password in a database row.” ClowdOps uses a **federated protection model** for sensitive material at rest: the pieces that *could* unlock data are deliberately **split across the trust boundary**, so no single store, process, or compromise path holds the whole story. There is no lone master key sitting in one drawer waiting to decrypt everything.
+
+In practice, sealed bundles are stored as **layered ciphertext**—a modern envelope design where bulk data is encrypted under keys that are themselves wrapped under a separate asymmetric trust anchor. Integrity is checked before anything is trusted, and **cryptographic proof-of-possession** is required before sealed configuration is released to an execution node. That mirrors how the agent tier boots: encrypted material is fetched from the control plane only after a **signed, time-bound attestation**, and only then unwrapped locally with material that never ships as plaintext over the wire.
+
+The net effect is **defence in depth that earns the name**: even a sophisticated breach of one layer should still leave an attacker staring at noise—because federation was the point from day one, not an afterthought.
 
 ### Cloud credentials
 
