@@ -1,10 +1,10 @@
-[← Cloud Agent](README.md) · [Workspace & credentials →](your-workspace.md)
+[← ClowdOps](README.md) · [Workspace & credentials →](your-workspace.md)
 
 # Getting Started
 
 **On this page:** [Sign up](#sign-up) · [Navigating back to onboarding](#navigating-back-to-onboarding)
 
-This page walks you through creating an account, completing onboarding, and reaching the Cloud Agent chat interface for the first time.
+This page walks you through creating an account, completing onboarding, and reaching the ClowdOps chat interface for the first time.
 
 ## Sign up
 
@@ -12,7 +12,7 @@ Follow the steps below in order.
 
 ### Step 1: Create your account
 
-Go to the Cloud Agent sign-up page and register with your email and a password, or use a social provider (Google, Microsoft, or GitHub).
+Go to the ClowdOps sign-up page and register with your email and a password, or use a social provider (Google, Microsoft, or GitHub).
 
 After registering with email, check your inbox and click the verification link before continuing.
 

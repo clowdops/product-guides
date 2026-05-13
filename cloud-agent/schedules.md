@@ -1,4 +1,4 @@
-[← Cloud Agent](README.md) · [← Templates](templates.md) · [Runs →](runs.md)
+[← ClowdOps](README.md) · [← Templates](templates.md) · [Runs →](runs.md)
 
 # Scheduled Runs
 

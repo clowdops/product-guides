@@ -1,8 +1,8 @@
-[← Cloud Agent](README.md) · [← Getting Started](getting-started.md) · [Chat →](chat.md)
+[← ClowdOps](README.md) · [← Getting Started](getting-started.md) · [Chat →](chat.md)
 
 # Projects, Sandboxes & Credentials
 
-**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials) · [Gateway tokens](#gateway-tokens)
+**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials)
 
 ## Projects and sandboxes
 
@@ -55,15 +55,3 @@ The process is identical to cloud credentials: add, fill provider fields, save, 
 
 > [!IMPORTANT]
 > You need at least one AI credential in the sandbox for the agent to function. Without one, the chat composer is disabled.
-
-### Gateway tokens
-
-Gateway tokens are sandbox-scoped bearer tokens in OpenAI-compatible format. They let external tools or scripts call Cloud Agent's AI gateway directly, without exposing your underlying provider keys.
-
-To create a gateway token:
-
-1. Open the **Gateway Tokens** tab (inside Credentials).
-2. Click **Generate token**.
-3. Copy the token immediately — it is shown only once.
-
-You can create multiple tokens per sandbox (useful for separating dev and CI environments) and revoke any of them individually.

@@ -1,12 +1,12 @@
-[← Cloud Agent](README.md) · [← Workspace](your-workspace.md) · [Templates →](templates.md)
+[← ClowdOps](README.md) · [← Workspace](your-workspace.md) · [Templates →](templates.md)
 
 # Chatting with the Agent
 
 **On this page:** [Starting a conversation](#starting-a-conversation) · [Execution phases](#execution-phases) · [Numbered steps](#numbered-steps) · [Clarifying questions](#clarifying-questions) · [Conversation history](#conversation-history)
 
-Chat is the primary way to interact with Cloud Agent. Every conversation runs within the currently selected sandbox, using the credentials and context bound to it.
+Chat is the primary way to interact with ClowdOps. Every conversation runs within the currently selected sandbox, using the credentials and context bound to it.
 
-<!-- Screenshot: ![Cloud Agent — main chat interface](./images/cloud-agent-chat-main-ui.png) -->
+<!-- Screenshot: ![ClowdOps — main chat interface](./images/cloud-agent-chat-main-ui.png) -->
 
 ## Starting a conversation
 

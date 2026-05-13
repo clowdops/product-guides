@@ -1,11 +1,11 @@
-# Cloud Agent (Preview)
+# ClowdOps (Preview)
 
 **[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Templates](templates.md)** · **[Schedules](schedules.md)** · **[Runs](runs.md)** · **[Resources](resources.md)** · **[Team & settings](team-and-settings.md)**
 
-Cloud Agent is a chat-oriented interface for running AI agents against your cloud infrastructure. You describe a task in plain language, and the agent plans and executes it — querying resources, calling APIs, running code, and reasoning over results — all within the credentials and scope you define.
+ClowdOps is a chat-oriented interface for running AI agents against your cloud infrastructure. You describe a task in plain language, and the agent plans and executes it — querying resources, calling APIs, running code, and reasoning over results — all within the credentials and scope you define.
 
 > [!NOTE]
-> Cloud Agent is designed for technical users who already have cloud provider credentials (AWS, GCP, Azure) or AI API keys (OpenAI, Anthropic, and so on). You bring your keys; Cloud Agent does the rest.
+> ClowdOps is designed for technical users who already have cloud provider credentials (AWS, GCP, Azure) or AI API keys (OpenAI, Anthropic, and so on). You bring your keys; ClowdOps does the rest.
 
 ## Key concepts
 

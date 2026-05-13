@@ -1,4 +1,4 @@
-[← Cloud Agent](README.md) · [← Schedules](schedules.md) · [Resources →](resources.md)
+[← ClowdOps](README.md) · [← Schedules](schedules.md) · [Resources →](resources.md)
 
 # Runs & History
 

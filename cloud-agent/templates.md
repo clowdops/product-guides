@@ -1,4 +1,4 @@
-[← Cloud Agent](README.md) · [← Chat](chat.md) · [Schedules →](schedules.md)
+[← ClowdOps](README.md) · [← Chat](chat.md) · [Schedules →](schedules.md)
 
 # Templates
 

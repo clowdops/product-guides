@@ -1,4 +1,4 @@
-[← Cloud Agent](README.md) · [← Runs](runs.md) · [Team & settings →](team-and-settings.md)
+[← ClowdOps](README.md) · [← Runs](runs.md) · [Team & settings →](team-and-settings.md)
 
 # Cloud Resources
 

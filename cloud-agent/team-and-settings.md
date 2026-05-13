@@ -1,4 +1,4 @@
-[← Cloud Agent](README.md) · [← Resources](resources.md)
+[← ClowdOps](README.md) · [← Resources](resources.md)
 
 # Team & Settings
 
@@ -50,7 +50,7 @@ Review your current subscription plan under **Plan**. Upgrade, downgrade, or can
 
 ### Credits
 
-Cloud Agent uses a credit system for AI execution costs. View your current balance and transaction history under **Usage**.
+ClowdOps uses a credit system for AI execution costs. View your current balance and transaction history under **Usage**.
 
 > [!NOTE]
 > Credits are consumed per run based on the number of tokens used and the models invoked. The **Runs** tab shows per-run cost estimates; the **Usage** page shows aggregate consumption over time.
