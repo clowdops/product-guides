@@ -63,3 +63,9 @@ The process is identical to cloud credentials: add, fill provider fields, save, 
 
 > [!IMPORTANT]
 > You need at least one AI credential in the sandbox for the agent to function. Without one, the chat composer is disabled.
+
+#### Which model the agent uses
+
+ClowdOps picks the chat model automatically from the AI credentials attached to the sandbox. The platform has a provider-priority list (OpenAI → Anthropic → Gemini → Bedrock by default); the resolver intersects that list with which providers your sandbox actually has keys for and selects the first match.
+
+The picked model is shown in the chat header badge once the first turn completes (for example `$0.07 / $5.00 · gpt-5.2`). To change the model, add or remove AI credentials so the priority resolution lands on a different provider.

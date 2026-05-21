@@ -1,61 +1,102 @@
-[← ClowdOps](README.md) · [← Templates](templates.md) · [Runs →](runs.md)
+[← ClowdOps](README.md) · [← Chat](chat.md) · [Chats & history →](chats.md)
 
 # Scheduled Runs
 
-**On this page:** [Creating a schedule](#creating-a-schedule) · [Managing schedules](#managing-schedules) · [Viewing scheduled run output](#viewing-scheduled-run-output)
+**On this page:** [What a schedule is](#what-a-schedule-is) · [Creating a schedule](#creating-a-schedule) · [Allowed actions](#allowed-actions) · [Managing schedules](#managing-schedules) · [Viewing scheduled run output](#viewing-scheduled-run-output) · [Failure handling](#failure-handling)
 
-Scheduled runs execute a template automatically on a recurring cron schedule. They are useful for regular audits, daily reports, or any repeating task you would otherwise trigger manually.
+Scheduled runs execute a prompt automatically on a recurring cron schedule. They are useful for regular audits, daily reports, or any repeating task you would otherwise trigger manually.
 
 Open the **Schedules** tab inside any sandbox to manage schedules.
 
-> [!WARNING]
-> You need at least one template in the sandbox before you can create a schedule.
+## What a schedule is
+
+A schedule is a saved prompt that fires on a cron cadence. Each firing creates an **unattended chat session** — same engine, same tools, same audit trail as an interactive chat, with two differences:
+
+- There is no human to answer questions, so the agent cannot ask clarifying questions.
+- There is no human to approve confirmations, so any action that would normally prompt for confirmation is **denied** unless its category is explicitly pre-approved on the schedule.
 
 ## Creating a schedule
 
-<!-- Screenshot: ![Create schedule form — frequency presets and custom cron option](./images/cloud-agent-schedules-create-form.png) -->
+<!-- Screenshot: ![Create schedule form — prompt, cron builder, allowed categories](./images/cloud-agent-schedules-create-form.png) -->
 
-### Step 1: Open the dialog
+Click **New schedule** to open the editor.
 
-Click **New schedule**. This opens the create dialog.
+### Step 1: Name and prompt
 
-### Step 2: Name your schedule
+- **Name** — a short display label (for example `Daily S3 Audit — Prod`). Appears in the schedule list and in run history.
+- **Prompt** — the full instruction for the agent, exactly as you would write it in chat.
 
-Enter a display name (for example `Daily S3 Audit — Prod`). This name appears in the schedule list and in run history.
+### Step 2: Frequency
 
-### Step 3: Select a template
-
-Choose the template to execute. Only templates from the current sandbox are available.
-
-### Step 4: Set the frequency
-
-Choose a preset or enter a custom cron expression:
+Pick a preset or enter a custom cron expression:
 
 | Preset | Example |
 | --- | --- |
 | **Hourly** | At a specific minute past every hour |
 | **Daily** | At a specific hour and minute each day |
-| **Weekly** | On specific days of the week at a given time |
-| **Monthly** | On specific days of the month at a given time |
+| **Weekly** | On selected days of the week at a given time |
+| **Monthly** | On selected days of the month at a given time |
 | **Custom** | Any valid 5-field cron expression (for example `0 9 * * 1-5`) |
 
-The UI shows a human-readable preview of the cron expression before you save.
+### Step 3: Timezone
 
-### Step 5: Save
+Choose the timezone the cron expression should be interpreted in. The editor pre-fills with your browser's timezone and shows the current UTC offset alongside each option (for example `Europe/Madrid (UTC+1)`).
 
-Click **Create**. The schedule is active immediately.
+### Step 4: Allowed actions
+
+Tick the [action categories](guardrails.md#categorical-grants) this schedule is pre-approved to perform. Anything outside this allowlist is denied at runtime — even if the sandbox's standing grant would permit it interactively.
+
+Categories the sandbox itself isn't granted are disabled in the picker (you can't pre-approve something the parent scope hasn't allowed).
+
+> [!TIP]
+> Keep allowed actions to the minimum the prompt needs. A read-only audit schedule should leave the list empty — read access is always allowed.
+
+### Step 5: Max runtime
+
+Set a per-firing runtime cap (default 15 minutes). If the agent hasn't finished by then, the run is terminated and marked failed.
+
+### Step 6: Save
+
+Click **Create**. The schedule is active immediately. Toggle the **Enabled** switch off if you want to keep it but not have it fire.
+
+## Allowed actions
+
+When the agent is running a scheduled session and reaches for a mutating tool call, the system enforces, in order:
+
+1. The org → project → sandbox grant chain (same as for interactive chat).
+2. **AND** the schedule's own allowlist from Step 4.
+
+Both must permit the category. If either denies, the call is blocked and the agent receives a denial back. See [Guardrails & cost caps](guardrails.md) for the full model.
 
 ## Managing schedules
 
 | Action | How |
 | --- | --- |
-| **Pause** | Toggle the enable/disable switch on any schedule row |
+| **Pause** | Toggle the enable switch on any schedule row |
 | **Resume** | Toggle it back on |
-| **Delete** | Click the delete icon — this also removes the cron trigger, but preserves past run history |
+| **Edit** | Click the pencil icon to change prompt, cron, timezone, allowed actions, or runtime cap |
+| **Delete** | Click the trash icon — this also removes the cron trigger, but preserves past run history |
 
 ## Viewing scheduled run output
 
-Each time a schedule fires, a new run is created and tagged with source **Scheduled** in the [Runs & History](runs.md) tab. Click the row to open the debug view and inspect step-by-step output.
+Each time a schedule fires, a new chat session is created tagged with source **Scheduled** in the [Chats & History](chats.md) tab. The schedules row also shows the **last fire**, **next fire**, and a status pill for the most recent run:
+
+| Pill | Meaning |
+| --- | --- |
+| **Success** | The agent finished cleanly |
+| **Blocked** | The agent stopped because policy denied a step it needed |
+| **Failed** | The agent crashed, hit the runtime cap, or exceeded budget |
+| **Running** | A firing is currently in progress |
+
+Click the row's **Runs** action to see the latest firings; click a firing to open the full chat-session viewer (read-only, with a "Scheduled run" ribbon at the top).
 
 > [!NOTE]
-> If a scheduled run is already in progress when the next tick fires, it is skipped automatically to prevent overlapping executions.
+> If a scheduled run is still in progress when the next tick fires, the next tick is **skipped** automatically to prevent overlapping executions.
+
+## Failure handling
+
+Scheduled runs do **not** retry. If a firing fails (budget exceeded, policy denied a critical step, sandbox crash, …) the schedule waits for the next cron tick.
+
+If consecutive failures pile up, the schedule **auto-disables itself** to avoid burning budget on something that's clearly broken. The threshold is inheritable: you can set a per-schedule override, otherwise it falls back to the sandbox / project / org's max-consecutive-failures setting, otherwise to the platform default (5).
+
+A re-enabled schedule resets the consecutive-failure counter.
