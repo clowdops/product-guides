@@ -30,3 +30,4 @@ ClowdOps is a chat-oriented interface for running AI agents against your cloud i
 | [Cloud Resources](resources.md) | Explore the discovered resource inventory |
 | [Guardrails & cost caps](guardrails.md) | Categorical permissions, USD budgets, and where to set them |
 | [Team & Settings](team-and-settings.md) | Members, billing, plan, and account settings |
+| [Credential Setup Recipes](credentials/README.md) | Ready-to-run setup guides for DevOps, FinOps, SecOps, VCS, and SSH |
