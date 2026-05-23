@@ -7,6 +7,16 @@ ClowdOps is a chat-oriented interface for running AI agents against your cloud i
 > [!NOTE]
 > ClowdOps is designed for technical users who already have cloud provider credentials (AWS, GCP, Azure) or AI API keys (OpenAI, Anthropic, and so on). You bring your keys; ClowdOps does the rest.
 
+## Two lines of defence
+
+ClowdOps applies safety in two layers, and both matter.
+
+**First line — credential permissions.** The keys you attach to a sandbox define the hard outer boundary of what the agent can ever do. If the credential only has read access, no prompt, no guardrail misconfiguration, and no model behaviour can cause a write. This is the layer you control entirely, before ClowdOps is even in the picture. Start here: [Credential Setup Recipes](credentials/README.md) has ready-to-run recipes for read-only, cost-observer, and security-audit setups for AWS, GCP, Azure, VCS, and SSH.
+
+**Second line — agent guardrails.** On top of whatever the credential allows, ClowdOps adds its own categorical permission system and USD budget caps. Mutating actions (deleting resources, modifying IAM, running host commands, …) require explicit grants at the org, project, or sandbox level, and prompt for in-chat confirmation unless pre-approved. See [Guardrails & cost caps](guardrails.md).
+
+The right posture is to use both: scope credentials to the minimum your use case actually needs, then use guardrails to gate what the agent is allowed to reach for within that scope.
+
 ## Key concepts
 
 | Concept | What it is |
