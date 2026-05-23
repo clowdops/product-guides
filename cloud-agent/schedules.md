@@ -2,7 +2,7 @@
 
 # Scheduled Runs
 
-**On this page:** [What a schedule is](#what-a-schedule-is) · [Creating a schedule](#creating-a-schedule) · [Allowed actions](#allowed-actions) · [Managing schedules](#managing-schedules) · [Viewing scheduled run output](#viewing-scheduled-run-output) · [Failure handling](#failure-handling)
+**On this page:** [What a schedule is](#what-a-schedule-is) · [Creating a schedule](#creating-a-schedule) · [Allowed actions](#allowed-actions) · [Managing schedules](#managing-schedules) · [Viewing scheduled run output](#viewing-scheduled-run-output) · [Failure handling](#failure-handling) · [Post-run digest](#step-6-post-run-digest)
 
 Scheduled runs execute a prompt automatically on a recurring cron schedule. They are useful for regular audits, daily reports, or any repeating task you would otherwise trigger manually.
 
@@ -55,7 +55,23 @@ Categories the sandbox itself isn't granted are disabled in the picker (you can'
 
 Set a per-firing runtime cap (default 15 minutes). If the agent hasn't finished by then, the run is terminated and marked failed.
 
-### Step 6: Save
+### Step 6: Post-run digest
+
+Optionally send a summary to a notification channel after each firing.
+
+- **Channel** — choose from the notify credentials attached to this sandbox (Slack, Teams, PagerDuty, or SMTP). Select *Off — no digest* to skip notifications.
+- **Send on** — filter which outcomes trigger the digest:
+
+| Option | Sends when |
+| --- | --- |
+| **Always** | Every run, regardless of outcome |
+| **On success** | Only when the run finished cleanly |
+| **On failure** | Only when the run failed or hit the runtime cap |
+| **On blocked** | Only when policy denied a step the agent needed |
+
+If no notification channels are attached to the sandbox yet, the picker is empty and a hint links you to Credentials → Notifications. See [Notification channels](your-workspace.md#notification-channels) for setup.
+
+### Step 7: Save
 
 Click **Create**. The schedule is active immediately. Toggle the **Enabled** switch off if you want to keep it but not have it fire.
 
@@ -74,7 +90,7 @@ Both must permit the category. If either denies, the call is blocked and the age
 | --- | --- |
 | **Pause** | Toggle the enable switch on any schedule row |
 | **Resume** | Toggle it back on |
-| **Edit** | Click the pencil icon to change prompt, cron, timezone, allowed actions, or runtime cap |
+| **Edit** | Click the pencil icon to change prompt, cron, timezone, allowed actions, runtime cap, or digest channel |
 | **Delete** | Click the trash icon — this also removes the cron trigger, but preserves past run history |
 
 ## Viewing scheduled run output

@@ -2,7 +2,7 @@
 
 # Projects, Sandboxes & Credentials
 
-**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [How your keys stay private at rest](#how-your-keys-stay-private-at-rest) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials)
+**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [How your keys stay private at rest](#how-your-keys-stay-private-at-rest) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials) · [Notification channels](#notification-channels)
 
 ## Projects and sandboxes
 
@@ -69,3 +69,23 @@ The process is identical to cloud credentials: add, fill provider fields, save, 
 ClowdOps picks the chat model automatically from the AI credentials attached to the sandbox. The platform has a provider-priority list (OpenAI → Anthropic → Gemini → Bedrock by default); the resolver intersects that list with which providers your sandbox actually has keys for and selects the first match.
 
 The picked model is shown in the chat header badge once the first turn completes (for example `$0.07 / $5.00 · gpt-5.2`). To change the model, add or remove AI credentials so the priority resolution lands on a different provider.
+
+### Notification channels
+
+Notification channels let the agent push messages to where your team already is — Slack, Microsoft Teams, PagerDuty, or email (SMTP). They appear in the **Notifications** tab of the Credentials section.
+
+| Provider | Required fields |
+| --- | --- |
+| **Slack** | Incoming webhook URL |
+| **Microsoft Teams** | Incoming webhook URL |
+| **PagerDuty** | Routing key (Events API v2) |
+| **SMTP** | Host, port, username, password, sender address, recipient address(es) |
+
+The process is the same as for other credentials: click **Add notification channel** in the Notifications tab, select the provider, fill in the fields, and save.
+
+> [!IMPORTANT]
+> Notification credentials are **server-side only**. The webhook URL or API key is never injected into the sandbox shell — the platform makes the outbound request on the agent's behalf. This is intentional: it keeps secrets out of bash history and audit logs.
+
+Once a channel is attached to a sandbox, the agent can use it in two ways:
+- **Ad-hoc during chat** — ask the agent to *"post this finding to Slack"* and it will call the `notify` tool (see [Sending notifications from chat](chat.md#sending-notifications)).
+- **Automatic schedule digests** — configure a channel on a schedule and the platform posts a summary after each run (see [Post-run digest](schedules.md#step-6-post-run-digest)).

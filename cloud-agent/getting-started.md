@@ -16,6 +16,9 @@ Go to the ClowdOps sign-up page and register with your email and a password, or 
 
 After registering with email, check your inbox and click the verification link before continuing.
 
+> [!NOTE]
+> If the sign-up page shows an **"Invite only"** message instead of the registration form, ClowdOps is running in private preview mode. New accounts are created by invitation only — check your inbox for an invite link, or contact your team's ClowdOps admin. If you already have an account (for example you were invited by an admin), use the **Sign in** link instead.
+
 ### Step 2: Create your organisation
 
 On first login, the onboarding wizard launches automatically. Enter your organisation name and website. These are used for billing and team management.
