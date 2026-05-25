@@ -44,7 +44,7 @@ Use the **Source** filter at the top of the list to narrow results.
 
 Click any row to open the chat-session viewer. For scheduled runs the composer is hidden and a **"Scheduled run"** ribbon at the top links back to the parent schedule.
 
-A **Debug** panel exposes the full step-by-step trace: each tool call's inputs, outputs, model used, token count, the action category the policy engine assigned, and error details for failed steps.
+A **Debug** panel exposes the full step-by-step trace: each action's inputs, outputs, model used, token count, the action category ClowdOps assigned, and error details for failed steps.
 
 > [!TIP]
 > The Debug panel is the primary tool for understanding why a session produced unexpected results, was blocked by a guardrail, or failed partway through.

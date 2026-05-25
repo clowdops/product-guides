@@ -27,7 +27,7 @@ The agent runs in a loop: it thinks, calls a tool, reads the result, thinks agai
 - **Tool calls** appear inline as they start (`bash`, `discover_cloud_resources`, `get_cost_analysis`, …) with a live elapsed-time counter while they run.
 - **Streaming text** from the model appears as it's generated.
 - When the model thinks a task is multi-step, it declares a **plan** that renders as a live checklist (see below).
-- The bash sandbox is **stateful within a session** — files, installed packages, and shell history from one turn are visible to the next.
+- The **working environment is stateful within a session** — files, installed packages, and history from one turn are visible to the next.
 
 ## The plan checklist
 
@@ -83,8 +83,8 @@ $0.07 / $5.00 · gpt-5.2
 
 While the agent is working, the send button morphs into a **Stop** button (a red square). Click it to interrupt the turn:
 
-- The agent's Go context is cancelled, halting any new tool dispatches.
-- Any in-flight `bash` running inside the sandbox is killed (the container itself survives, so subsequent turns still see your state).
+- Any work the agent is currently doing is cancelled — no further actions are dispatched.
+- The working environment for the session is preserved, so the next turn picks up where the previous one left off.
 - The conversation marks the turn as cancelled; no synthetic assistant reply is added.
 
 ## Billing refusals

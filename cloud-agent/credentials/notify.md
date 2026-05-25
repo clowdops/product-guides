@@ -8,7 +8,7 @@ Notification channel credentials are created at the project level (Project → C
 
 Give each channel a descriptive **label** — this is what you (and the agent) use to address it, for example `oncall`, `#infra-alerts`, or `cost-reports`.
 
-> Notification credentials are **server-side only**. The webhook URL or API key is never injected into the sandbox shell and never appears in audit logs — the platform makes the outbound request on the agent's behalf.
+> ClowdOps holds notification credentials and makes the outbound request on your behalf — the secret is never handed to the agent or exposed anywhere in the conversation.
 
 ---
 

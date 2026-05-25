@@ -33,7 +33,7 @@ Eight mutating categories cover the actions the agent can take. Read access is i
 A scope **grants** the categories it permits. Anything not granted is denied — the agent receives a denial and can react.
 
 > [!NOTE]
-> The agent's sandbox itself (where its scratch `bash` runs) is isolated from your infrastructure. Only tool calls that touch your cloud (or hosts you've credentialed) are gated by these categories.
+> The agent works in an isolated environment that has no direct access to your infrastructure. Only the specific actions it takes through ClowdOps — querying your cloud, running commands on hosts you've credentialed — are gated by these categories.
 
 ## USD cost caps
 

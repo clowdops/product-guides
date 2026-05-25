@@ -23,11 +23,7 @@ Open the **Credentials** tab inside any sandbox to manage them.
 
 ### How your keys stay private at rest
 
-Your cloud and AI credentials are not “one password in a database row.” ClowdOps uses a **federated protection model** for sensitive material at rest: the pieces that *could* unlock data are deliberately **split across the trust boundary**, so no single store, process, or compromise path holds the whole story. There is no lone master key sitting in one drawer waiting to decrypt everything.
-
-In practice, sealed bundles are stored as **layered ciphertext**—a modern envelope design where bulk data is encrypted under keys that are themselves wrapped under a separate asymmetric trust anchor. Integrity is checked before anything is trusted, and **cryptographic proof-of-possession** is required before sealed configuration is released to an execution node. That mirrors how the agent tier boots: encrypted material is fetched from the control plane only after a **signed, time-bound attestation**, and only then unwrapped locally with material that never ships as plaintext over the wire.
-
-The net effect is **defence in depth that earns the name**: even a sophisticated breach of one layer should still leave an attacker staring at noise—because federation was the point from day one, not an afterthought.
+ClowdOps never stores your credentials in a form that can be read directly. Each key is protected at rest so that accessing the database alone is not sufficient to recover it — the material needed to use a credential is kept separate from the credential itself, and is only made available to the agent at the moment it needs to make a call on your behalf. Nothing sensitive is held any longer than necessary.
 
 ### Cloud credentials
 
@@ -102,7 +98,7 @@ Notification channels let the agent push messages to where your team already is 
 The process is the same as for other credentials: click **Add notification channel** in the Notifications tab, select the provider, fill in the fields, and save.
 
 > [!IMPORTANT]
-> Notification credentials are **server-side only**. The webhook URL or API key is never injected into the sandbox shell — the platform makes the outbound request on the agent's behalf. This is intentional: it keeps secrets out of bash history and audit logs.
+> ClowdOps holds notification credentials and makes the outbound request on your behalf — the secret is never handed to the agent or exposed anywhere in the conversation.
 
 For a step-by-step setup guide for each provider (including CLI examples), see [Credential Setup Recipes](credentials/README.md).
 

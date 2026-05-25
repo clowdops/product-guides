@@ -10,7 +10,7 @@ Open the **Schedules** tab inside any sandbox to manage schedules.
 
 ## What a schedule is
 
-A schedule is a saved prompt that fires on a cron cadence. Each firing creates an **unattended chat session** — same engine, same tools, same audit trail as an interactive chat, with two differences:
+A schedule is a saved prompt that fires on a cron cadence. Each firing creates an **unattended chat session** — same capabilities, same audit trail as an interactive chat, with two differences:
 
 - There is no human to answer questions, so the agent cannot ask clarifying questions.
 - There is no human to approve confirmations, so any action that would normally prompt for confirmation is **denied** unless its category is explicitly pre-approved on the schedule.

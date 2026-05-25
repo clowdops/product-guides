@@ -86,6 +86,6 @@ Configure this when creating or editing a schedule under the **Notifications** s
 They are complementary, not alternatives:
 
 - Use **mid-run `notify`** in your prompt for high-severity findings that shouldn't wait for the run to finish: *"if you find a publicly exposed storage bucket, page on-call immediately."* The agent sends this as soon as it detects the condition.
-- The **digest** is the deterministic floor — it fires after every run and summarises what happened, including the model's terminal answer and run outcome. It gives you audit coverage even when the model finds nothing worth paging about.
+- The **digest** is the reliable baseline — it fires after every run and summarises what happened, including the agent's conclusion and the run outcome. It gives you visibility even when the agent finds nothing worth paging about.
 
 A single schedule can do both: instruct the agent to `notify` on critical findings mid-run, and set a digest channel to always receive the end-of-run summary.
