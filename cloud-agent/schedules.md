@@ -59,17 +59,10 @@ Set a per-firing runtime cap (default 15 minutes). If the agent hasn't finished 
 
 Optionally send a summary to a notification channel after each firing.
 
-- **Channel** — choose from the notify credentials attached to this sandbox (Slack, Teams, PagerDuty, or SMTP). Select *Off — no digest* to skip notifications.
-- **Send on** — filter which outcomes trigger the digest:
+- **Channel** — choose from the notify credentials attached to this sandbox (Slack, Teams, PagerDuty, or SMTP). Select *Off — no digest* to skip. If no channels are attached yet, the picker is empty — add one under Credentials → Notifications first.
+- **Send on** — filter which outcomes trigger the digest: *Always* · *On success* · *On failure* · *On blocked*.
 
-| Option | Sends when |
-| --- | --- |
-| **Always** | Every run, regardless of outcome |
-| **On success** | Only when the run finished cleanly |
-| **On failure** | Only when the run failed or hit the runtime cap |
-| **On blocked** | Only when policy denied a step the agent needed |
-
-If no notification channels are attached to the sandbox yet, the picker is empty and a hint links you to Credentials → Notifications. See [Notification channels](your-workspace.md#notification-channels) for setup.
+For the full explanation of how digests work alongside mid-run notifications, see [Notifications](notifications.md#schedule-digests).
 
 ### Step 7: Save
 

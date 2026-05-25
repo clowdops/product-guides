@@ -2,7 +2,7 @@
 
 # Chatting with the Agent
 
-**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [The plan checklist](#the-plan-checklist) · [Clarifying questions](#clarifying-questions) · [Confirming a sensitive action](#confirming-a-sensitive-action) · [Live cost & model badge](#live-cost--model-badge) · [Stopping a turn](#stopping-a-turn) · [Billing refusals](#billing-refusals) · [Sending notifications](#sending-notifications) · [Conversation history](#conversation-history)
+**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [The plan checklist](#the-plan-checklist) · [Clarifying questions](#clarifying-questions) · [Confirming a sensitive action](#confirming-a-sensitive-action) · [Live cost & model badge](#live-cost--model-badge) · [Stopping a turn](#stopping-a-turn) · [Billing refusals](#billing-refusals) · [Notifications](#notifications) · [Conversation history](#conversation-history)
 
 Chat is the primary way to interact with ClowdOps. Every conversation runs within the currently selected sandbox, using the credentials, guardrails, and budget bound to it.
 
@@ -99,22 +99,15 @@ Before each turn starts, the platform checks that you have enough credits and ar
 
 Each toast deep-links to the Billing page so you can top up or upgrade.
 
-## Sending notifications
+## Notifications
 
-The agent can push a message to a notification channel (Slack, Teams, PagerDuty, or email) at any point during a conversation using the `notify` tool. This works in both interactive and unattended (scheduled) chats.
-
-To use it, simply tell the agent to notify you:
+The agent can push messages to a notification channel (Slack, Teams, PagerDuty, or email) at any point during a conversation — just ask it naturally:
 
 - *"After you scan the buckets, post a Slack summary of any public ones."*
 - *"Page on-call via PagerDuty if you find a critical exposure."*
 - *"Email me the cost report when you're done."*
 
-A few things to know:
-
-- **Channel selection** — the agent resolves the channel from notify credentials attached to the sandbox by their label. If the sandbox has a single channel, it is the default. If there are multiple, you can name one explicitly (for example *"post to the #infra-alerts channel"*).
-- **Severity** — use natural language to indicate urgency. The agent maps your phrasing to `info`, `warning`, or `critical`. `critical` routes preferentially to PagerDuty if one is attached.
-- **The tool is only available when a notify channel is attached** — if the sandbox has no notification credentials, the agent does not see the tool at all. Add one under Credentials → Notifications (see [Notification channels](your-workspace.md#notification-channels)).
-- **Secrets stay server-side** — the webhook URL or API key is never exposed inside the sandbox or in audit logs.
+The `notify` tool is only available when at least one notification channel is attached to the sandbox. To set one up, see [Credentials → Notification channels](your-workspace.md#notification-channels). For the full feature guide including severity routing, schedule digests, and setup, see [Notifications](notifications.md).
 
 ## Conversation history
 

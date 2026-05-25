@@ -4,6 +4,7 @@
 
 **On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [How your keys stay private at rest](#how-your-keys-stay-private-at-rest) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials) · [Notification channels](#notification-channels)
 
+
 ## Projects and sandboxes
 
 **Projects** are team-level groupings. Every sandbox belongs to a project. Use projects to separate concerns — for example, one project per team or per application domain.
@@ -37,6 +38,7 @@ Cloud credentials grant the agent access to your infrastructure. Supported provi
 | **AWS** | Cloud | Access Key ID, Secret Access Key, Region |
 | **GCP** | Cloud | Service Account JSON key |
 | **Azure** | Cloud | Tenant ID, Client ID, Client Secret, Subscription ID |
+| **OCI** | Cloud | Tenancy OCID, User OCID, Key Fingerprint, API Private Key (PEM), Region (optional) |
 | **SSH** | Compute / VMs | Host, Username, Private key |
 | **GitHub** | VCS | Personal access token or App credentials |
 | **GitLab** | VCS | Personal access token, Host URL |
@@ -55,20 +57,36 @@ Credentials you create at the project level are reusable across sandboxes. From 
 
 ### AI credentials
 
-AI credentials let the agent call LLM APIs on your behalf (OpenAI, Anthropic, Google Gemini, AWS Bedrock, and so on).
+Every sandbox needs access to an AI model to function. There are two ways to provide it, configured per project in the **AI** tab of Project → Credentials. The two modes are mutually exclusive.
 
-<!-- Screenshot: ![AI tab — connecting LLM providers](./images/cloud-agent-credentials-ai-tab.png) -->
+#### BYOK — bring your own key
 
-The process is identical to cloud credentials: add, fill provider fields, save, and associate with the sandbox.
+Add your own API key for OpenAI, Anthropic, Google Gemini, or AWS Bedrock in the project AI tab. Associate it with a sandbox and the agent uses it for all LLM calls in that sandbox.
+
+- **You pay your AI provider directly** for token usage. This cost does not appear in your ClowdOps billing history.
+- **ClowdOps bills** sandbox compute time and a small metered usage fee, shown as *BYOK LLM (metered)* and *Sandbox compute* in Settings → Billing.
+- The **model resolver** selects the active provider from a priority list (OpenAI → Anthropic → Gemini → Bedrock by default), intersected with which providers are actually attached to the sandbox. The picked model appears in the chat header badge (for example `$0.04 / $5.00 · claude-sonnet-4`).
 
 > [!IMPORTANT]
-> You need at least one AI credential in the sandbox for the agent to function. Without one, the chat composer is disabled.
+> A sandbox with no AI credential attached has its chat composer disabled — the agent cannot run until at least one is associated.
 
-#### Which model the agent uses
+To change which model the agent uses, add or remove AI credentials so the priority list resolves to a different provider.
 
-ClowdOps picks the chat model automatically from the AI credentials attached to the sandbox. The platform has a provider-priority list (OpenAI → Anthropic → Gemini → Bedrock by default); the resolver intersects that list with which providers your sandbox actually has keys for and selects the first match.
+#### Platform-provided AI
 
-The picked model is shown in the chat header badge once the first turn completes (for example `$0.07 / $5.00 · gpt-5.2`). To change the model, add or remove AI credentials so the priority resolution lands on a different provider.
+At the top of the AI tab on the Project → Credentials page, an **AI provider** selector lets you choose OpenAI, Anthropic, Gemini, or Bedrock and use Flashback's own keys — no credential to create or rotate.
+
+- **LLM cost is billed to your organisation's credit balance**, alongside sandbox compute. Both appear in Settings → Billing as *Platform LLM* and *Sandbox compute*.
+- When a platform provider is selected, the **Add AI credential** button in the AI tab is disabled. The two modes cannot be active at the same time.
+- To switch **from platform to BYOK**: change the selector to *BYOK — use my own keys* and add an AI credential below.
+- To switch **from BYOK to platform**: remove every AI credential from the project first, then select a provider. The selector is replaced by an informational note while any BYOK key is present.
+
+#### Cost at a glance
+
+| Mode | LLM cost | Compute cost |
+| --- | --- | --- |
+| **BYOK** | On your AI provider's bill | On your ClowdOps balance (*BYOK LLM (metered)* + *Sandbox compute*) |
+| **Platform** | On your ClowdOps balance (*Platform LLM*) | On your ClowdOps balance (*Sandbox compute*) |
 
 ### Notification channels
 

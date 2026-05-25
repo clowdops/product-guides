@@ -2,7 +2,7 @@
 
 # Cloud Credentials
 
-**On this page:** [Read-only discovery](#read-only-discovery) · [Cost analysis](#cost-analysis)
+**On this page:** [Read-only discovery](#read-only-discovery) · [Cost analysis](#cost-analysis) · [OCI — read-only and cost](#oci)
 
 ---
 
@@ -218,3 +218,111 @@ az role assignment create \
 Via portal: Cost Management + Billing → select your Billing Account or Billing Profile → Access control (IAM) → + Add → Add role assignment → `Cost Management Reader` → assign to `ClowdOpsAuditor`.
 
 > On Enterprise Agreement subscriptions, the billing scope structure differs — you may need to assign the role at the EA enrollment level. Check which scope your Cost Management dashboard is scoped to.
+
+---
+
+## OCI
+
+OCI is different from the other cloud providers in one important way: **cost access is built into the same credential** — there is no separate billing export or second role to add. The `read usage-reports` policy statement is all that is needed on top of resource discovery.
+
+### Read-only discovery and cost analysis
+
+**What you'll create:** an IAM user in a dedicated group, with a read-only policy and an API signing key.
+
+**Phase 1 — create the auditor group**
+
+1. OCI Console → navigation menu → **Identity & Security** → **Domains** → your domain (usually `Default`) → **Groups**.
+   *(On older tenancies without Identity Domains: **Identity & Security** → **Groups**.)*
+2. Click **Create group** → name it (e.g. `ClowdOpsAuditors`) → **Create**.
+
+**Phase 2 — create the policy**
+
+Policies are written at the tenancy (root compartment) level so the group can see all resources.
+
+1. **Identity & Security** → **Policies** → set the compartment selector to the **root** compartment.
+2. Click **Create Policy** → name it (e.g. `ClowdOpsAuditor-ReadOnly`) → toggle **Show manual editor** → paste:
+
+   ```
+   Allow group ClowdOpsAuditors to read all-resources in tenancy
+   Allow group ClowdOpsAuditors to read usage-reports in tenancy
+   ```
+
+   - `read all-resources` — covers metadata discovery and reading data inside resources (compute instances, VCNs, block volumes, Object Storage objects, IAM users, compartments, and more). The `read` verb cannot create, modify, or delete anything.
+   - `read usage-reports` — grants access to the Usage API for historical cost and usage data. Without it those calls fail.
+
+3. Click **Create**.
+
+> **Granular alternative.** If a tenancy-wide `read all-resources` is too broad for your security policy, replace it with per-resource-family statements. See your OCI documentation for the full list of resource families (`instance-family`, `virtual-network-family`, `volume-family`, `buckets`, and so on).
+
+**Phase 3 — create the user**
+
+1. **Identity & Security** → **Domains** → your domain → **Users** (or **Identity & Security** → **Users** on non-domain tenancies).
+2. **Create user** → choose **IAM user** (not federated/SSO — API signing requires a local IAM user) → name it (e.g. `clowdops-auditor`). No console password needed.
+3. Open the new user → **Groups** → **Add user to group** → select `ClowdOpsAuditors`.
+
+**Phase 4 — generate the API signing key**
+
+OCI authenticates API calls with an RSA signing key — you upload the public half and keep the private PEM.
+
+```bash
+mkdir -p ~/.oci
+openssl genrsa -out ~/.oci/oci_api_key.pem 2048
+chmod 600 ~/.oci/oci_api_key.pem
+openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
+```
+
+> Do not add a passphrase (`-aes256`). A passphrase-protected key cannot be used for unattended API access.
+
+Upload the public key to the user:
+
+1. Open the user → **API keys** → **Add API key** → **Paste a public key** → paste the contents of `~/.oci/oci_api_key_public.pem` → **Add**.
+2. OCI displays a **Configuration file preview** — copy the **fingerprint**, **tenancy OCID**, **user OCID**, and **region** from it. You need all four.
+
+**CLI alternative (Phases 1–4)**
+
+```bash
+export OCI_TENANCY_OCID=ocid1.tenancy.oc1...   # your tenancy OCID
+
+# Group
+GROUP_OCID=$(oci iam group create \
+  --name ClowdOpsAuditors \
+  --description "ClowdOps read-only auditor" \
+  --query 'data.id' --raw-output)
+
+# Policy (attach to root compartment = tenancy OCID)
+oci iam policy create \
+  --compartment-id "$OCI_TENANCY_OCID" \
+  --name ClowdOpsAuditor-ReadOnly \
+  --description "Read-only discovery + usage" \
+  --statements '["Allow group ClowdOpsAuditors to read all-resources in tenancy","Allow group ClowdOpsAuditors to read usage-reports in tenancy"]'
+
+# User
+USER_OCID=$(oci iam user create \
+  --name clowdops-auditor \
+  --description "ClowdOps auditor" \
+  --query 'data.id' --raw-output)
+
+# Add user to group
+oci iam group add-user --user-id "$USER_OCID" --group-id "$GROUP_OCID"
+
+# Key pair
+openssl genrsa -out ~/.oci/oci_api_key.pem 2048 && chmod 600 ~/.oci/oci_api_key.pem
+openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
+
+# Upload public key (prints fingerprint)
+oci iam user api-key upload --user-id "$USER_OCID" --key-file ~/.oci/oci_api_key_public.pem
+```
+
+**Phase 5 — collect the credential values**
+
+| Value | Where to find it |
+| --- | --- |
+| **Tenancy OCID** | Profile menu (top-right) → **Tenancy: \<name\>** → copy OCID |
+| **User OCID** | The user's detail page → copy OCID |
+| **Key Fingerprint** | Shown next to the uploaded key under the user's **API keys** (`aa:bb:cc:…`) |
+| **API Private Key (PEM)** | Contents of `~/.oci/oci_api_key.pem` |
+| **Region** | Home region identifier, e.g. `us-phoenix-1` — shown in the config file preview |
+
+**ClowdOps fields:** Tenancy OCID · User OCID · Key Fingerprint · API Private Key (PEM) · Region (optional — leave blank to use the SDK default).
+
+> **Cost is built in.** Unlike GCP, there is no billing export to configure. The `read usage-reports` policy statement gives the agent direct access to the OCI Usage API for historical cost and usage data at daily and monthly granularity.
