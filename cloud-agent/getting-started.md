@@ -21,19 +21,26 @@ After registering with email, check your inbox and click the verification link b
 
 ### Step 2: Create your organisation
 
-On first login, the onboarding wizard launches automatically. Enter your organisation name and website. These are used for billing and team management.
+On first login, the onboarding wizard launches automatically. Enter your organisation name and an optional website. These are used for billing and team management.
 
-### Step 3: Create your first project
+### Step 3: Set spending limits
+
+Optionally set guardrails for the whole organisation before you create anything: a USD budget cap and the [action categories](guardrails.md) the agent is allowed to use. This step is **skippable** — you can leave the defaults and tune limits later from any **Usage** tab. Whatever you set here becomes the org-level ceiling that projects and sandboxes inherit.
+
+### Step 4: Create your first project
 
 A **project** groups related sandboxes. Give it a descriptive name (for example `Production`, `Data Platform`, or `Infra Automation`).
 
-### Step 4: Create your first sandbox
+### Step 5: Create your first sandbox
 
 A **sandbox** is the execution environment where the agent runs. It holds your credentials, templates, and run history. Name it to reflect its scope (for example `AWS prod` or `GCP analytics`).
 
 <!-- Screenshot: ![Onboarding wizard — creating the first sandbox](./images/cloud-agent-onboarding-create-sandbox.png) -->
 
-### Step 5: You are in
+> [!NOTE]
+> New projects and sandboxes **inherit their permission grants** (the allowed action categories and failure caps) from the level above them, so each one starts with sensible limits rather than empty or fully locked. You can tighten any of them afterwards — a child can never exceed its parent. See [Guardrails & cost caps](guardrails.md).
+
+### Step 6: You are in
 
 After completing onboarding you land in the Chat view with your new sandbox selected. You can now add credentials and start chatting.
 

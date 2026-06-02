@@ -30,7 +30,7 @@ flowchart TB
   P --> A --> R --> T --> I
 ```
 
-Expand any node to drill down. Active resources are shown with a solid indicator; inactive or unknown ones are dimmed.
+Expand any node to drill down. Active resources are shown with a solid indicator; inactive or unknown ones are dimmed. Hover a resource row to reveal a **Copy name** button — handy for pasting an exact resource name or ID back into a chat prompt.
 
 ## Scan status per credential
 

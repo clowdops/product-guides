@@ -46,11 +46,29 @@ Update or remove a member at any time from the Members list.
 
 ## Plan
 
-Review your current subscription plan under **Plan**. Upgrade, downgrade, or cancel from here.
+The **Plans & credits** page is a storefront: it shows the subscription tiers, your current plan, and credit packs you can buy. Upgrade, downgrade, or cancel from here.
+
+### Subscription tiers
+
+Every organisation always has an active plan. New orgs start on the **Free** tier automatically; from there you can move up the ladder. Each paid tier grants a pool of credit at the start of every billing cycle (more than you pay for — the surplus is the credit "premium") and carries its own 24-hour spend cap.
+
+| Plan | Monthly | Yearly | Credit premium | Daily cap |
+| --- | --- | --- | --- | --- |
+| **Free** | — | — | Starter grant on signup | Conservative starter cap |
+| **Basic** | $20 → $22 credit | $200 → $220 credit | +10% | $2 / day |
+| **Pro** | $100 → $120 credit | $1000 → $1200 credit | +20% | $10 / day |
+| **Pro+** | $200 → $260 credit | $2000 → $2600 credit | +30% | $20 / day |
+| **Enterprise** | $500 → $700 credit | $5000 → $7000 credit | +40% | $50 / day |
+
+- **Credit** lands in your **subscription bucket** at the start of each cycle and is reset (not carried over) on renewal — see [Billing](#billing).
+- **Daily cap** is the rolling 24-hour spend brake for the tier; turns are refused with `daily_cap_reached` once it is hit until older spend ages out.
+- Choose **monthly** or **yearly** billing per tier; the yearly price is ten months for twelve.
+
+Picking a higher tier mid-cycle upgrades you immediately; the new cycle's grant and cap apply from the change.
 
 ## Billing
 
-The **Billing** page shows your credit balance, lets you top up, and lists recent transactions.
+The **Billing** page is your account view: your current subscription status (with upgrade / cancel), your credit balances, and recent transactions. The storefront for *buying* plans and credit packs lives on the [Plans & credits](#plan) page.
 
 <!-- Screenshot: ![Billing page — three stat cards, buy-credits tile, transactions list](./images/cloud-agent-billing-page.png) -->
 
@@ -71,24 +89,37 @@ Three stat cards at the top of the page show:
 
 ### Buy credits
 
-When custom-amount purchases are enabled for your org, a **Buy credits** tile appears under the stat cards:
+On the **Plans & credits** page you can top up your PAYG balance two ways:
 
-- One-click **preset chips** (for example $5, $10, $25, $50).
-- A free-form input for any amount within the configured bounds.
-- Pay through **Stripe Checkout**; the grant lands in your **PAYG bucket** (1:1 ratio: $X paid → $X credit).
+**Credit packs** — fixed-size packs, some of which include bonus credit:
+
+| Pack | Price | You receive |
+| --- | --- | --- |
+| **Small** | $10 | $10 credit |
+| **Medium** | $50 | $55 credit (+10% bonus) |
+
+**Custom top-up** — when custom-amount purchases are enabled for your org, an **Other amount** option lets you buy any amount between the configured bounds (for example $5 minimum, $1000 maximum), with one-click preset chips ($5, $10, $25, $50, $100).
+
+Either way you pay through **Stripe Checkout**; the grant lands in your **PAYG bucket** and never expires.
 
 ### Transactions
 
-The transactions list shows the latest credit movements with friendly labels:
+The transactions list shows the latest 25 credit movements with friendly labels:
 
 | Label | What it represents |
 | --- | --- |
-| **Agent LLM** | LLM-token spend for a chat turn |
+| **Platform LLM** | LLM-token spend when the sandbox uses platform-provided AI keys (billed to your balance, with the platform surcharge applied) |
+| **BYOK LLM (metered)** | The small metered usage fee on LLM calls made with your own keys (the token cost itself is on your AI provider's bill) |
+| **Agent** | The agent service markup applied on top of LLM spend |
 | **Sandbox compute** | Wall-clock seconds the agent's sandbox stayed warm |
 | **Credit pack** | A PAYG top-up you purchased |
 | **Subscription (initial)** | First grant when you signed up for a plan |
 | **Subscription (renewal)** | Cycle renewal grant (the bucket resets to this value) |
+| **Referral credit** | A one-time reward from the [Referrals](referrals.md) program |
 | **Manual adjustment** | An operator-applied credit or debit |
+
+> [!NOTE]
+> Agent spend is split three ways — **BYOK** LLM (your-key metered fee), **platform** LLM (platform-key cost × surcharge), and the **agent** markup. Whichever apply, all of them count toward your budget caps. The [Usage](#usage) dashboard lets you break spend down by these types.
 
 ### The 24-hour spend cap
 
@@ -113,6 +144,7 @@ Each scope shows:
 
 - **KPI strip** — cost / input tokens / output tokens / daily cap headroom.
 - **Cost by day** — stacked bar chart segmented by model, for the last 7 days.
+- **Cost by type** — a breakdown of spend across the three cost buckets (**BYOK** LLM, **platform** LLM, and the **agent** markup), with filter chips (*All* · *Billed* · *BYOK*) to focus the charts on one bucket.
 - **Token throughput** — daily input/output token totals.
 - **Per-model breakdown** — table sorted by cost.
 

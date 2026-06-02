@@ -2,9 +2,16 @@
 
 # Notifications
 
-**On this page:** [What it is](#what-it-is) · [Setting up channels](#setting-up-channels) · [Sending notifications from chat](#sending-notifications-from-chat) · [Schedule digests](#schedule-digests)
+**On this page:** [What it is](#what-it-is) · [Setting up channels](#setting-up-channels) · [Sending notifications from chat](#sending-notifications-from-chat) · [Schedule digests](#schedule-digests) · [Platform notifications](#platform-notifications)
 
 Notification channels let the agent push messages to where your team already is — Slack, Microsoft Teams, PagerDuty, or email — without any credentials being exposed in the sandbox.
+
+ClowdOps sends notifications in two families, covered on this page:
+
+| Family | Who fires it | What it covers |
+| --- | --- | --- |
+| **Agent notifications** | The agent (in chat) or the platform (after a schedule) | Findings and run summaries — see below |
+| **[Platform notifications](#platform-notifications)** | The platform engine, deterministically | Account-level events: budget caps hit, guardrail denials, run failures |
 
 ---
 
@@ -89,3 +96,34 @@ They are complementary, not alternatives:
 - The **digest** is the reliable baseline — it fires after every run and summarises what happened, including the agent's conclusion and the run outcome. It gives you visibility even when the agent finds nothing worth paging about.
 
 A single schedule can do both: instruct the agent to `notify` on critical findings mid-run, and set a digest channel to always receive the end-of-run summary.
+
+---
+
+## Platform notifications
+
+Everything above is **agent** notification — the agent (or a schedule) addressing a channel attached to a sandbox. Separately, ClowdOps can alert you about **account-level events** that the platform detects on its own, regardless of any model behaviour. These are configured once per organisation and routed to org-level channels.
+
+> [!NOTE]
+> Platform notifications are fired **deterministically by the engine**, not by the LLM. A budget cap or a guardrail denial is a fact the platform knows, so the alert does not depend on the agent deciding to send it.
+
+### Event types
+
+| Event | Fires when |
+| --- | --- |
+| **Budget** | An org / project / sandbox spend cap is reached |
+| **Guardrail denial** | Policy blocked an action the agent attempted (a category that wasn't granted) |
+| **Run failure** | A chat or scheduled run failed (crashed, hit the runtime cap, or exceeded budget) |
+
+High-risk denials (deleting data, destroying a resource, modifying IAM or networking) and budget caps are treated as higher severity.
+
+### Configuring routing
+
+Open **Settings → System notifications**. Each event type is routed independently to one of your organisation's notification channels — so you can send budget alerts to Slack and guardrail denials to PagerDuty, for example.
+
+1. **Add org channels** — the system-notifications page has its own channel manager. Add the org-level Slack, Microsoft Teams, PagerDuty, or email (SMTP) channels you want platform events to reach. These are scoped to the organisation, separate from the sandbox-attached channels used by the agent.
+2. **Map each event** — for every event type, pick which channel (if any) receives it. Leave an event unrouted to skip it.
+
+Routing is fan-out: a single event can go to more than one channel, and one channel can receive several event types.
+
+> [!NOTE]
+> Organisations with platform-admin scope additionally see cross-organisation **system** events (engine failures and infrastructure outages) that route to a dedicated global system channel. These are not shown to regular organisations.

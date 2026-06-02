@@ -13,6 +13,9 @@
 
 Switch between projects and sandboxes at any time using the dropdowns at the top of the left sidebar. The agent always operates within the currently selected sandbox.
 
+> [!TIP]
+> To rename a project or sandbox, hover its name in the page header and click the pencil. Edit inline and press **Enter** to save (or **Escape** to cancel).
+
 ---
 
 ## Credentials

@@ -2,7 +2,7 @@
 
 # Chatting with the Agent
 
-**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [The plan checklist](#the-plan-checklist) · [Clarifying questions](#clarifying-questions) · [Confirming a sensitive action](#confirming-a-sensitive-action) · [Live cost & model badge](#live-cost--model-badge) · [Stopping a turn](#stopping-a-turn) · [Billing refusals](#billing-refusals) · [Notifications](#notifications) · [Conversation history](#conversation-history)
+**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [The plan checklist](#the-plan-checklist) · [Clarifying questions](#clarifying-questions) · [Confirming a sensitive action](#confirming-a-sensitive-action) · [Live cost & model badge](#live-cost--model-badge) · [Stopping a turn](#stopping-a-turn) · [Billing refusals](#billing-refusals) · [Notifications](#notifications) · [Leaving feedback](#leaving-feedback) · [Conversation history](#conversation-history)
 
 Chat is the primary way to interact with ClowdOps. Every conversation runs within the currently selected sandbox, using the credentials, guardrails, and budget bound to it.
 
@@ -108,6 +108,15 @@ The agent can push messages to a notification channel (Slack, Teams, PagerDuty, 
 - *"Email me the cost report when you're done."*
 
 The `notify` tool is only available when at least one notification channel is attached to the sandbox. To set one up, see [Credentials → Notification channels](your-workspace.md#notification-channels). For the full feature guide including severity routing, schedule digests, and setup, see [Notifications](notifications.md).
+
+## Leaving feedback
+
+Each chat has a **Feedback** tab (alongside Chat and Debug). Use it to tell us whether the agent's response was helpful:
+
+- Pick a **satisfied / not satisfied** rating with the thumbs buttons.
+- Optionally add a **comment** explaining what worked or what went wrong.
+
+You can resubmit at any time to update your earlier feedback. When an administrator is viewing another organisation's chat, the tab is read-only.
 
 ## Conversation history
 

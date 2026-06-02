@@ -23,7 +23,7 @@ Eight mutating categories cover the actions the agent can take. Read access is i
 | --- | --- |
 | **Modify data** | Updating an object in place, writing to a database, changing a parameter store value |
 | **Create resource** | Provisioning a new VM, bucket, database, or Terraform `apply` |
-| **Delete data** | Removing files or objects, `DELETE` / `TRUNCATE`, `rm`, `aws s3 rm` |
+| **Delete data** | Removing remote objects or rows: `aws s3 rm`, `DELETE` / `TRUNCATE` against a remote database |
 | **Destroy resource** | Terminating instances, deleting databases, `terraform destroy` |
 | **Upscale / downscale capacity** | Resizing an instance, modifying an autoscaling group, changing an RDS instance class |
 | **Modify IAM permissions** | Creating roles or policies, attaching policies, granting bindings |
@@ -35,6 +35,16 @@ A scope **grants** the categories it permits. Anything not granted is denied —
 > [!NOTE]
 > The agent works in an isolated environment that has no direct access to your infrastructure. Only the specific actions it takes through ClowdOps — querying your cloud, running commands on hosts you've credentialed — are gated by these categories.
 
+### Inside the sandbox vs outside
+
+The categories gate state changes that reach **outside** the sandbox — your cloud control planes (`aws` / `gcloud` / `az` / `oci`), remote hosts (`ssh` / `scp` / `rsync`), external HTTP writes, and remote databases.
+
+Work the agent does **inside its own disposable sandbox** — creating, copying, moving, or deleting local files (`rm`, `cp`, `mv`, `mkdir`, `chmod`), output redirects (`>`, `>>`, `tee`), archiving (`tar`, `zip`), and managing local processes — is **not** gated by any category; it falls through to read-level. The sandbox is throwaway, so there is nothing there to protect, and you won't be interrupted by spurious confirmation prompts for ordinary local file work. The same command shape against a *remote* target (for example `aws s3 rm`, not a local `rm`) is what triggers the matching category.
+
+### When the agent runs an unfamiliar command
+
+Most commands are classified by their shape. If a command warrants scrutiny but can't be confidently classified, it is treated as **unknown** rather than waved through — which means it prompts for confirmation in an interactive chat and is denied in an unattended [scheduled run](#scheduled-runs). The system fails safe, not open.
+
 ## USD cost caps
 
 Three caps control spend in dollars:
@@ -44,6 +54,9 @@ Three caps control spend in dollars:
 - **Per-chat-session cap** — total spend within a single chat session.
 
 When a cap is hit, the in-flight chat turn ends with status **budget exceeded** and the agent reports back what it accomplished.
+
+> [!TIP]
+> The project and sandbox page headers carry a compact **budget pill** showing today's spend against the effective daily cap (the scope's own cap, or the parent's if it hasn't set one). Click it to jump to that scope's Usage tab. Inside a chat, the same information is in the [live cost & model badge](chat.md#live-cost--model-badge).
 
 > [!TIP]
 > Per-chat caps are especially useful for catching runaway loops. A modest per-chat cap (for example `$5`) bounds the cost of any single thing the agent tries to do, even if your monthly cap is much higher.
@@ -62,6 +75,9 @@ Organisation
 - A child scope **cannot exceed** its parent — granting `delete_data` at a sandbox requires the project (and org) to also grant it; setting a $1000/month cap at a project requires the org to allow at least that.
 - A child can be **stricter** than its parent — a sandbox can refuse a category the org allows, or set a tighter cap.
 - The UI enforces this when you save (it surfaces the parent's value as a soft hint and rejects out-of-bounds inputs); the backend re-validates on every write.
+
+> [!NOTE]
+> A newly created project, sandbox, or [schedule](schedules.md) **inherits its parent's granted categories and failure caps at creation time**, so it starts usable instead of empty or fully locked. You can tighten it afterwards — but never beyond what the parent allows.
 
 ## Where to configure
 
