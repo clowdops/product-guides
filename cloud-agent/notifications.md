@@ -39,9 +39,13 @@ Notification channels are credentials with their own tab. The setup follows the 
 
 Open **Project → Credentials → Notifications** → **Add notification channel**. Select the provider and fill in the required fields. See [Notification channel setup](credentials/notify.md) for provider-specific instructions (Slack, Teams, PagerDuty, SMTP).
 
+<img src="./images/project_creds_notification.png" alt="Project Notifications tab — list of configured channels" width="100%">
+
 **Step 2 — attach the channel to a sandbox**
 
 Open the sandbox → **Credentials → Notifications** → **Associate notification channel** (or **Associate all notification channels**). Only attached channels are reachable by the agent during a run.
+
+<img src="./images/sandbox_cred_notification.png" alt="Sandbox Notifications sub-tab — associate a project channel with the sandbox" width="100%">
 
 Give each channel a clear **label** (for example `oncall`, `#infra-alerts`, `cost-reports`). The label is how the agent and schedule digest address the channel — it does not need to match the actual channel name in Slack or Teams.
 
@@ -119,6 +123,8 @@ High-risk denials (deleting data, destroying a resource, modifying IAM or networ
 ### Configuring routing
 
 Open **Settings → System notifications**. Each event type is routed independently to one of your organisation's notification channels — so you can send budget alerts to Slack and guardrail denials to PagerDuty, for example.
+
+<img src="./images/settings_system_notifications.png" alt="System notifications page — org channels and per-event routing" width="100%">
 
 1. **Add org channels** — the system-notifications page has its own channel manager. Add the org-level Slack, Microsoft Teams, PagerDuty, or email (SMTP) channels you want platform events to reach. These are scoped to the organisation, separate from the sandbox-attached channels used by the agent.
 2. **Map each event** — for every event type, pick which channel (if any) receives it. Leave an event unrouted to skip it.

@@ -43,7 +43,7 @@ Cloud credentials grant the agent access to your infrastructure. Supported provi
 | **GitLab** | VCS | Personal access token, Host URL |
 | **Azure DevOps** | VCS | Organisation URL, Personal access token |
 
-<!-- Screenshot: ![Cloud tab — connecting infrastructure providers](./images/cloud-agent-credentials-cloud-tab.png) -->
+<img src="./images/project_creds_cloud.png" alt="Cloud / Infra / VCS credentials tab — list of connected providers" width="100%">
 
 To add a cloud credential:
 
@@ -52,15 +52,21 @@ To add a cloud credential:
 3. Fill in the required fields (for example Access Key ID + Secret for AWS).
 4. Save. The credential appears in the list with a safe display hint (for example `AKIA1234 / us-east-1`).
 
+<img src="./images/project_creds_cloud_detail.png" alt="Add credential dialog with the provider picker open" width="400">
+
 Credentials you create at the project level are reusable across sandboxes. From the Credentials tab you can **associate** existing credentials with the current sandbox or **dissociate** ones no longer needed.
 
 ### AI credentials
 
 Every sandbox needs access to an AI model to function. There are two ways to provide it, configured per project in the **AI** tab of Project → Credentials. The two modes are mutually exclusive.
 
+<img src="./images/project_creds_ai.png" alt="AI LLMs tab — provider selector and the list of AI keys" width="100%">
+
 #### BYOK — bring your own key
 
 Add your own API key for OpenAI, Anthropic, Google Gemini, or AWS Bedrock in the project AI tab. Associate it with a sandbox and the agent uses it for all LLM calls in that sandbox.
+
+<img src="./images/project_creds_ai_anthropic.png" alt="Add AI credential dialog — provider, label, and API key fields" width="400">
 
 - **You pay your AI provider directly** for token usage. This cost does not appear in your ClowdOps billing history.
 - **ClowdOps bills** sandbox compute time and a small metered usage fee, shown as *BYOK LLM (metered)* and *Sandbox compute* in Settings → Billing.

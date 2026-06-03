@@ -90,6 +90,8 @@ The same editor opens at each scope from its **Usage** tab:
 | Sandbox | Sandbox → Usage → pencil icon |
 | Chat session | (per-chat budget surfaced from the chat header) |
 
+<img src="./images/sandbox_usage_limits.png" alt="Budget editor — daily/monthly/per-chat caps and allowed action categories" width="400">
+
 Each editor shows the parent scope's values as labelled hints (for example *"Inherited from project: $50.00/day"*) and lists the categories the parent permits — anything the parent didn't grant is greyed out.
 
 ## Who can edit what

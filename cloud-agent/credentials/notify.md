@@ -29,6 +29,8 @@ Give each channel a descriptive **label** — this is what you (and the agent) u
 | Webhook URL | Paste the URL from step 5 |
 | Channel hint | Optional — a `#channel-name` reminder shown in the credential list |
 
+<img src="../images/project_creds_notification_slack.png" alt="Add notification channel dialog — Slack incoming webhook URL" width="400">
+
 ---
 
 ## Microsoft Teams
@@ -47,6 +49,8 @@ Give each channel a descriptive **label** — this is what you (and the agent) u
 | --- | --- |
 | Webhook URL | Paste the URL from step 5 |
 
+<img src="../images/project_creds_notification_teams.png" alt="Add notification channel dialog — Microsoft Teams incoming webhook URL" width="400">
+
 ---
 
 ## PagerDuty
@@ -62,6 +66,8 @@ Give each channel a descriptive **label** — this is what you (and the agent) u
 | Field | Value |
 | --- | --- |
 | Routing key | Paste the Integration Key from step 3 |
+
+<img src="../images/project_creds_notification_pagerduty.png" alt="Add notification channel dialog — PagerDuty Events API v2 routing key" width="400">
 
 > The agent maps `severity: critical` to PagerDuty `critical` and lower severities to `warning` or `info` — all trigger the service's escalation policy. PagerDuty is selected preferentially when a sandbox has multiple channels and the agent uses `critical` severity.
 
@@ -83,5 +89,7 @@ Use a dedicated sending account (for example a Google Workspace service account,
 | Password | SMTP authentication password or app password |
 | From address | Sender address that appears in the email `From:` field |
 | To address(es) | One or more recipient addresses; all receive every notification |
+
+<img src="../images/project_creds_notification_smtp.png" alt="Add notification channel dialog — SMTP host, from, recipients, password" width="460">
 
 > TLS is required by default. Plain-text SMTP is not supported.

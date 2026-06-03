@@ -6,7 +6,7 @@
 
 The **Resources** tab gives you a live inventory of the cloud resources the agent has discovered in your sandbox. It is read-only from the UI — the agent populates it automatically as it explores your infrastructure, and you can trigger targeted re-scans per credential.
 
-<!-- Screenshot: ![Resource tree — hierarchical view grouped by provider and account](./images/cloud-agent-resources-tree.png) -->
+<img src="./images/sandbox_resources_tab.png" alt="Resources tab — hierarchical resource tree grouped by provider and account" width="100%">
 
 ## Resource tree
 

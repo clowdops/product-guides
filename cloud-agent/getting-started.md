@@ -31,11 +31,13 @@ Optionally set guardrails for the whole organisation before you create anything:
 
 A **project** groups related sandboxes. Give it a descriptive name (for example `Production`, `Data Platform`, or `Infra Automation`).
 
+<img src="./images/project_create.png" alt="New project form — naming a project" width="400">
+
 ### Step 5: Create your first sandbox
 
 A **sandbox** is the execution environment where the agent runs. It holds your credentials, templates, and run history. Name it to reflect its scope (for example `AWS prod` or `GCP analytics`).
 
-<!-- Screenshot: ![Onboarding wizard — creating the first sandbox](./images/cloud-agent-onboarding-create-sandbox.png) -->
+<img src="./images/sandbox_create.png" alt="New sandbox form — naming the first sandbox" width="400">
 
 > [!NOTE]
 > New projects and sandboxes **inherit their permission grants** (the allowed action categories and failure caps) from the level above them, so each one starts with sensible limits rather than empty or fully locked. You can tighten any of them afterwards — a child can never exceed its parent. See [Guardrails & cost caps](guardrails.md).

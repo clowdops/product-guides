@@ -6,7 +6,7 @@
 
 The **Chats** tab gives you a unified audit log of every agent execution in the sandbox — whether it was started by you in chat or fired automatically by a schedule.
 
-<!-- Screenshot: ![Chats tab — source filter, status badges, model column, token count, and cost columns](./images/cloud-agent-chats-list.png) -->
+<img src="./images/sandbox_chats_tab.png" alt="Chats tab — source filter, status badges, model, token, and cost columns" width="100%">
 
 ## Columns
 

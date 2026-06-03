@@ -30,6 +30,8 @@ VCS credentials let the agent clone repositories, read files and history, inspec
 
 **ClowdOps fields:** paste the token into the *Personal access token* field.
 
+<img src="../images/project_creds_gh.png" alt="Add credential dialog for GitHub — personal access token" width="400">
+
 > For organisation-wide access, a classic PAT with `repo` scope also works but grants broader access. Fine-grained tokens are preferred — they can be scoped to specific repos and expire independently.
 
 ---
@@ -74,5 +76,7 @@ VCS credentials let the agent clone repositories, read files and history, inspec
 4. Create and copy the token immediately.
 
 **ClowdOps fields:** Organisation URL (e.g. `https://dev.azure.com/your-org`) · Personal access token.
+
+<img src="../images/project_creds_azdevops.png" alt="Add credential dialog for Azure DevOps — PAT and organisation" width="400">
 
 > Tokens scoped to *All accessible organisations* work across multiple Azure DevOps organisations but are harder to audit. Prefer per-organisation tokens and create one credential per org in ClowdOps.

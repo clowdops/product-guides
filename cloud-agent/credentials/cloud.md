@@ -36,6 +36,8 @@ aws iam create-access-key --user-name clowdops-auditor
 
 **ClowdOps fields:** Access Key ID · Secret Access Key · Region (your primary region).
 
+<img src="../images/project_creds_aws.png" alt="Add credential dialog for AWS — access key, secret, region" width="460">
+
 > `ReadOnlyAccess` covers `List`, `Describe`, and `Get` across virtually all AWS services and allows reading data inside resources (for example downloading S3 objects). It contains no `Put`, `Post`, `Update`, or `Delete` actions.
 
 ---
@@ -140,6 +142,8 @@ echo "Subscription:  $(az account show --query id -o tsv)"
 ```
 
 **ClowdOps fields:** Tenant ID · Client ID · Client Secret · Subscription ID (any subscription in scope).
+
+<img src="../images/project_creds_azure.png" alt="Add credential dialog for Microsoft Azure — client ID, client secret, tenant ID" width="400">
 
 > `Reader` grants Control Plane access — you can see resource properties. To read actual data inside resources (blob contents, Key Vault secrets, Service Bus messages), add the relevant Data Plane roles: `Storage Blob Data Reader`, `Key Vault Secrets User`, and so on.
 

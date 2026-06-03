@@ -17,7 +17,7 @@ A schedule is a saved prompt that fires on a cron cadence. Each firing creates a
 
 ## Creating a schedule
 
-<!-- Screenshot: ![Create schedule form — prompt, cron builder, allowed categories](./images/cloud-agent-schedules-create-form.png) -->
+<img src="./images/sandbox_schedule_new.png" alt="New schedule form — prompt, frequency, timezone, and allowed action categories" width="460">
 
 Click **New schedule** to open the editor.
 
@@ -87,6 +87,8 @@ Both must permit the category. If either denies, the call is blocked and the age
 | **Delete** | Click the trash icon — this also removes the cron trigger, but preserves past run history |
 
 ## Viewing scheduled run output
+
+<img src="./images/sandbox_schedule_tab.png" alt="Schedules tab — a schedule row with cron, last fire, allowed count, and status pill" width="100%">
 
 Each time a schedule fires, a new chat session is created tagged with source **Scheduled** in the [Chats & History](chats.md) tab. The schedules row also shows the **last fire**, **next fire**, and a status pill for the most recent run:
 

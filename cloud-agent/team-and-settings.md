@@ -129,7 +129,7 @@ Subscription plans include a **24-hour rolling spend cap** as a safety brake. If
 
 The **Usage** page is a real-time dashboard of agent spend.
 
-<!-- Screenshot: ![Usage dashboard — KPI strip, cost-by-day chart, per-model breakdown](./images/cloud-agent-usage-dashboard.png) -->
+<img src="./images/sandbox_usage_tab.png" alt="Usage dashboard — KPI strip, cost-by-type chart, and filter chips" width="100%">
 
 The same dashboard appears at four scopes; the breadth of data narrows accordingly:
 
