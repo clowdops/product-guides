@@ -1,4 +1,4 @@
-[← ClowdOps](README.md) · [← Schedules](schedules.md) · [Resources →](resources.md)
+[← ClowdOps](README.md) · [← Schedules](schedules.md) · [External agents (MCP) →](mcp.md)
 
 # Chats & History
 
@@ -26,6 +26,7 @@ The **Chats** tab gives you a unified audit log of every agent execution in the 
 | --- | --- |
 | **Chat** | You started this from the chat interface |
 | **Scheduled** | A schedule fired this automatically — the row links back to the parent schedule |
+| **MCP** | An external agent (Claude Code, Cursor, …) started this over MCP — see [Connect External Agents (MCP)](mcp.md) |
 
 Use the **Source** filter at the top of the list to narrow results.
 

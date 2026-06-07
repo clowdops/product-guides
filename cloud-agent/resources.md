@@ -1,4 +1,4 @@
-[← ClowdOps](README.md) · [← Chats](chats.md) · [Guardrails & cost caps →](guardrails.md)
+[← ClowdOps](README.md) · [← External agents (MCP)](mcp.md) · [Guardrails & cost caps →](guardrails.md)
 
 # Cloud Resources
 
