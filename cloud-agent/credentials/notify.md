@@ -75,20 +75,47 @@ Give each channel a descriptive **label** — this is what you (and the agent) u
 
 ## Telegram
 
-**What you'll create:** a Telegram **bot** and the **chat ID** it posts to.
+**What you'll create:** a Telegram **bot**, then **connect it to the chat** it should post to, and copy that chat's **ID**.
 
-1. In Telegram, open **@BotFather** → send `/newbot` → follow the prompts (name + username) → copy the **bot token** (format `123456789:AAE…`).
-2. Decide the destination chat and get its **chat ID**:
-   - **Direct message:** message your bot once, then open `https://api.telegram.org/bot<token>/getUpdates` and read `message.chat.id`.
-   - **Group:** add the bot to the group, send a message, and read the (negative) `chat.id` the same way.
-   - **Channel:** add the bot as an admin and use `@channelusername`.
+> [!IMPORTANT]
+> A bot can't start a conversation or post anywhere on its own. You must first **start it** (for a direct message) or **add it** (to a group or channel) — *before* you try to read the chat ID. This is the step that's easy to miss.
+
+**1. Create the bot**
+
+In Telegram, open **@BotFather** → send `/newbot` → follow the prompts (display name + username ending in `bot`) → copy the **bot token** (format `123456789:AAE…`).
+
+**2. Connect the bot to the destination chat**
+
+> **Finding/opening your bot:** when you created it, BotFather replied with a link like `t.me/<botusername>` and the bot's `@username`. To open the bot, **tap that link**, or type its `@username` into Telegram's **search box** (top of the app) and select it. You reach or add the bot the same way wherever you want it to post.
+
+Pick where the agent should post and make the bot a participant there:
+
+- **Direct message (just you):** open the bot (tap its `t.me/…` link, or search its `@username`) → in the chat, tap the **Start** button at the bottom (or send it any message).
+- **Group:** open the group → **Add members** → search your bot's `@username` → add it. Then either mention it once (`@yourbot hi`) **or**, so it can see ordinary group messages, go back to **@BotFather** → `/setprivacy` → pick your bot → **Disable**.
+- **Channel:** channel → **Manage channel** → **Administrators** → **Add admin** → search your bot's `@username` → add it with the **Post messages** permission enabled.
+
+**3. Add the channel in ClowdOps — it finds the chat for you**
+
+Open **Project → Credentials → Notifications → Add notification channel**, choose **Telegram**, and paste the **Bot Token**. ClowdOps then shows an **Open @yourbot** link — click it, press **Start** in Telegram (or add the bot to your group/channel), and the chat **appears here automatically**; pick it if the bot is in more than one. The **Chat ID** fills in for you — no copying ids by hand.
+
+> **Inbound-only?** If you just want to *drive* the agent from Telegram (not receive notifications), leave **Chat ID blank** — inbound replies go to whoever messages the bot, so no default destination is needed.
+
+> If nothing appears after ~a minute, the bot hasn't received anything yet — do **step 2** (open/add the bot and send it a message; for groups, mind the privacy-mode note), then click **Try again**.
+
+> **The chat ID is not the bot's name.** `@yourbot` is the *sender*; the Chat ID is the *destination* (you, a group, or a channel) and is almost always a **number**. You can type it manually, but Detect is easier and avoids mistakes.
+
+<details>
+<summary>Manual alternative (advanced)</summary>
+
+Send the bot a message, open `https://api.telegram.org/bot<token>/getUpdates` in a browser, and read `"chat":{"id": …}` — **positive** for direct messages, **negative** (often `-100…`) for groups, or use `@channelusername` for a public channel.
+</details>
 
 **ClowdOps fields:**
 
 | Field | Value |
 | --- | --- |
 | Bot Token | Paste the token from step 1 |
-| Chat ID | The numeric id (or `@channelusername`) from step 2 |
+| Chat ID | Auto-detected after you open the bot (or type it manually). **Optional** — leave blank for inbound-only |
 | Topic / Thread ID | Optional — for forum-style groups, the topic to post into |
 
 > [!TIP]

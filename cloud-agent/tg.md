@@ -44,15 +44,20 @@ Inbound turns a Telegram chat into a remote for your agent. You message the bot 
 ### 1. Create the bot
 
 1. In Telegram, open **@BotFather** → `/newbot` → follow the prompts → copy the **bot token** (`123456789:AAE…`).
-2. In ClowdOps, open **Project → Credentials → Notifications → Add notification channel**, choose **Telegram**, and fill in:
+2. **Connect the bot to the destination chat, then read its chat ID.** A bot can't post anywhere until it's a participant. (BotFather gave you a `t.me/<botusername>` link and the bot's `@username` — tap the link, or search the `@username` in Telegram, to open/add the bot.)
+   - **Direct message:** open the bot and tap **Start**.
+   - **Group:** add the bot as a member (and, so it can see messages, either mention it once or disable its privacy mode via @BotFather → `/setprivacy`).
+   - **Channel:** add the bot as an admin with **Post messages** permission.
+   In ClowdOps you don't hunt for the chat ID: paste the bot token, click the **Open @yourbot** link it shows, press **Start**, and the chat appears automatically. See [Notification channel setup → Telegram](credentials/notify.md#telegram) for the full walkthrough.
+3. In ClowdOps, open **Project → Credentials → Notifications → Add notification channel**, choose **Telegram**, and fill in:
 
 | Field | Value |
 | --- | --- |
 | **Bot Token** | The token from @BotFather. Encrypted at rest; never injected into the sandbox. |
-| **Chat ID** | The default outbound destination — a numeric id for a user/group (groups are negative), or `@channelusername` for a public channel. Add the bot to the group/channel first. |
+| **Chat ID** | The default outbound destination — auto-detected after you open the bot (step 2), or entered manually. **Optional**: leave blank for inbound-only, since inbound replies go to whoever messages the bot. |
 | **Topic / Thread ID** | *(optional)* For forum-style groups, the topic to post into. |
 
-3. Open the sandbox → **Credentials → Notifications** and **associate** the Telegram credential with it. (Outbound is now live; inbound needs the steps below.)
+4. Open the sandbox → **Credentials → Notifications** and **associate** the Telegram credential with it. (Outbound is now live; inbound needs the steps below.)
 
 > [!NOTE]
 > Inbound requires the bot credential to be attached to the sandbox first — that's how the engine reaches the bot to set up the webhook and reply.

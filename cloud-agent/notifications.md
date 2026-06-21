@@ -61,6 +61,7 @@ Once a channel is attached to the sandbox, the agent can call the `notify` tool 
 - *"After you scan the buckets, post a Slack summary of any public ones."*
 - *"Page on-call via PagerDuty if you find a critical exposure."*
 - *"Send me an email with the cost report when you're done."*
+- *"Post the audit summary to Telegram when you're done."*
 - *"If you detect active errors in the logs, notify the #infra-alerts channel immediately — don't wait until you finish."*
 
 ### How the agent picks a channel
