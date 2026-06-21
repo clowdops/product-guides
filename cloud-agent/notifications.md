@@ -4,7 +4,10 @@
 
 **On this page:** [What it is](#what-it-is) · [Setting up channels](#setting-up-channels) · [Sending notifications from chat](#sending-notifications-from-chat) · [Schedule digests](#schedule-digests) · [Platform notifications](#platform-notifications)
 
-Notification channels let the agent push messages to where your team already is — Slack, Microsoft Teams, PagerDuty, or email — without any credentials being exposed in the sandbox.
+Notification channels let the agent push messages to where your team already is — Slack, Microsoft Teams, PagerDuty, Telegram, or email — without any credentials being exposed in the sandbox.
+
+> [!TIP]
+> **Telegram is two-way.** It works as an outbound channel like the others *and* as a control surface: a linked Telegram chat can drive the sandbox's agent (prompts, approvals, answers). See [Telegram](tg.md) for the inbound side.
 
 ClowdOps sends notifications in two families, covered on this page:
 
@@ -37,7 +40,7 @@ Notification channels are credentials with their own tab. The setup follows the 
 
 **Step 1 — create the channel at the project level**
 
-Open **Project → Credentials → Notifications** → **Add notification channel**. Select the provider and fill in the required fields. See [Notification channel setup](credentials/notify.md) for provider-specific instructions (Slack, Teams, PagerDuty, SMTP).
+Open **Project → Credentials → Notifications** → **Add notification channel**. Select the provider and fill in the required fields. See [Notification channel setup](credentials/notify.md) for provider-specific instructions (Slack, Teams, PagerDuty, Telegram, SMTP).
 
 <img src="./images/project_creds_notification.png" alt="Project Notifications tab — list of configured channels" width="100%">
 
@@ -126,7 +129,7 @@ Open **Settings → System notifications**. Each event type is routed independen
 
 <img src="./images/settings_system_notifications.png" alt="System notifications page — org channels and per-event routing" width="100%">
 
-1. **Add org channels** — the system-notifications page has its own channel manager. Add the org-level Slack, Microsoft Teams, PagerDuty, or email (SMTP) channels you want platform events to reach. These are scoped to the organisation, separate from the sandbox-attached channels used by the agent.
+1. **Add org channels** — the system-notifications page has its own channel manager. Add the org-level Slack, Microsoft Teams, PagerDuty, Telegram, or email (SMTP) channels you want platform events to reach. These are scoped to the organisation, separate from the sandbox-attached channels used by the agent.
 2. **Map each event** — for every event type, pick which channel (if any) receives it. Leave an event unrouted to skip it.
 
 Routing is fan-out: a single event can go to more than one channel, and one channel can receive several event types.

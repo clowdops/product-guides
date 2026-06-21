@@ -1,6 +1,6 @@
 # ClowdOps (Preview)
 
-**[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Schedules](schedules.md)** · **[Notifications](notifications.md)** · **[Chats & history](chats.md)** · **[External agents (MCP)](mcp.md)** · **[Resources](resources.md)** · **[Guardrails & cost caps](guardrails.md)** · **[Team & settings](team-and-settings.md)** · **[Referrals](referrals.md)**
+**[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Schedules](schedules.md)** · **[Notifications](notifications.md)** · **[Chats & history](chats.md)** · **[External agents (MCP)](mcp.md)** · **[Telegram](tg.md)** · **[Resources](resources.md)** · **[Guardrails & cost caps](guardrails.md)** · **[Team & settings](team-and-settings.md)** · **[Referrals](referrals.md)**
 
 ClowdOps is a chat-oriented interface for running AI agents against your cloud infrastructure. You describe a task in plain language, and the agent plans and executes it — querying resources, calling APIs, running code, and reasoning over results — all within the credentials, guardrails, and budget you define.
 
@@ -24,7 +24,7 @@ The right posture is to use both: scope credentials to the minimum your use case
 | **Project** | A top-level grouping for your team's work. Contains one or more sandboxes. |
 | **Sandbox** | An isolated execution environment. Holds the credentials, schedules, and history for a specific context (for example a production environment or a cloud account). |
 | **Schedule** | A saved prompt that runs unattended on a cron cadence. Each firing is a chat session with no human attached. |
-| **Chat session** | A single agent execution — triggered by you in chat, automatically by a schedule, or by an external agent over MCP. |
+| **Chat session** | A single agent execution — triggered by you in chat, automatically by a schedule, by an external agent over MCP, or from a linked Telegram chat. |
 | **Agent access token** | A per-sandbox bearer (`fba_…`) that lets an external MCP client (Claude Code, Cursor, …) drive the sandbox's agent. See [Connect External Agents (MCP)](mcp.md). |
 | **Action category** | One of eight mutating categories (modify data, create resource, delete data, destroy resource, scale capacity, modify IAM, modify networking, run command on host). Read access is always allowed. |
 | **Budget** | A USD spend cap (daily / monthly / per-chat) that applies hierarchically from org down to sandbox and chat. |
@@ -39,8 +39,9 @@ The right posture is to use both: scope credentials to the minimum your use case
 | [Scheduled Runs](schedules.md) | Run prompts unattended on a cron schedule |
 | [Chats & History](chats.md) | Audit every chat session — interactive or scheduled |
 | [Connect External Agents (MCP)](mcp.md) | Drive a sandbox from Claude Code, Cursor, Codex, or VS Code |
+| [Telegram](tg.md) | Get the agent's messages in Telegram and drive a sandbox by chatting with the bot |
 | [Cloud Resources](resources.md) | Explore the discovered resource inventory |
-| [Notifications](notifications.md) | Push alerts and digests to Slack, Teams, PagerDuty, or email |
+| [Notifications](notifications.md) | Push alerts and digests to Slack, Teams, PagerDuty, Telegram, or email |
 | [Guardrails & cost caps](guardrails.md) | Categorical permissions, USD budgets, and where to set them |
 | [Team & Settings](team-and-settings.md) | Members, billing, plan, and account settings |
 | [Referrals](referrals.md) | Invite other teams with a referral code — both sides earn credit |

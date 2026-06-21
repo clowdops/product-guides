@@ -2,7 +2,7 @@
 
 # Notification Channel Credentials
 
-**On this page:** [Slack](#slack) · [Microsoft Teams](#microsoft-teams) · [PagerDuty](#pagerduty) · [SMTP (email)](#smtp-email)
+**On this page:** [Slack](#slack) · [Microsoft Teams](#microsoft-teams) · [PagerDuty](#pagerduty) · [Telegram](#telegram) · [SMTP (email)](#smtp-email)
 
 Notification channel credentials are created at the project level (Project → Credentials → Notifications) and then attached to individual sandboxes. Only attached channels are reachable by the agent.
 
@@ -70,6 +70,29 @@ Give each channel a descriptive **label** — this is what you (and the agent) u
 <img src="../images/project_creds_notification_pagerduty.png" alt="Add notification channel dialog — PagerDuty Events API v2 routing key" width="400">
 
 > The agent maps `severity: critical` to PagerDuty `critical` and lower severities to `warning` or `info` — all trigger the service's escalation policy. PagerDuty is selected preferentially when a sandbox has multiple channels and the agent uses `critical` severity.
+
+---
+
+## Telegram
+
+**What you'll create:** a Telegram **bot** and the **chat ID** it posts to.
+
+1. In Telegram, open **@BotFather** → send `/newbot` → follow the prompts (name + username) → copy the **bot token** (format `123456789:AAE…`).
+2. Decide the destination chat and get its **chat ID**:
+   - **Direct message:** message your bot once, then open `https://api.telegram.org/bot<token>/getUpdates` and read `message.chat.id`.
+   - **Group:** add the bot to the group, send a message, and read the (negative) `chat.id` the same way.
+   - **Channel:** add the bot as an admin and use `@channelusername`.
+
+**ClowdOps fields:**
+
+| Field | Value |
+| --- | --- |
+| Bot Token | Paste the token from step 1 |
+| Chat ID | The numeric id (or `@channelusername`) from step 2 |
+| Topic / Thread ID | Optional — for forum-style groups, the topic to post into |
+
+> [!TIP]
+> A Telegram channel is also a **control surface**: once attached to a sandbox you can link a chat and drive the agent from Telegram (prompts, Allow/Deny approvals, answers). See [Telegram](../tg.md).
 
 ---
 

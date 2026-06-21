@@ -95,14 +95,18 @@ At the top of the AI tab on the Project → Credentials page, an **AI provider**
 
 ### Notification channels
 
-Notification channels let the agent push messages to where your team already is — Slack, Microsoft Teams, PagerDuty, or email (SMTP). They appear in the **Notifications** tab of the Credentials section.
+Notification channels let the agent push messages to where your team already is — Slack, Microsoft Teams, PagerDuty, Telegram, or email (SMTP). They appear in the **Notifications** tab of the Credentials section.
 
 | Provider | Required fields |
 | --- | --- |
 | **Slack** | Incoming webhook URL |
 | **Microsoft Teams** | Incoming webhook URL |
 | **PagerDuty** | Routing key (Events API v2) |
+| **Telegram** | Bot token (from @BotFather) + chat ID |
 | **SMTP** | Host, port, username, password, sender address, recipient address(es) |
+
+> [!TIP]
+> **Telegram is two-way.** Besides receiving the agent's messages, a Telegram chat can also *drive* the sandbox's agent — you message the bot and it plans and executes, with guarded actions confirmed by an Allow/Deny tap. See [Telegram](tg.md).
 
 The process is the same as for other credentials: click **Add notification channel** in the Notifications tab, select the provider, fill in the fields, and save.
 
