@@ -45,5 +45,6 @@ The right posture is to use both: scope credentials to the minimum your use case
 | [Guardrails & cost caps](guardrails.md) | Categorical permissions, USD budgets, and where to set them |
 | [Team & Settings](team-and-settings.md) | Members, billing, plan, and account settings |
 | [Referrals](referrals.md) | Invite other teams with a referral code — both sides earn credit |
+| [Private Deployment](private-deployment/README.md) | Run the whole ClowdOps stack on your own VPS or air-gapped network |
 | [Credential Setup Recipes](credentials/README.md) | Ready-to-run setup guides for DevOps, FinOps, SecOps, VCS, and SSH |
 | [Agent Usage Guidelines](Agent%20usage%20guidelines/README.md) | When to reach for the agent vs a pipeline, where it earns its keep, and how to design and bound a task |
