@@ -32,6 +32,24 @@ If the licence lapses, or the box can't reach its authority, it does **not** shu
 
 "Lapsed" and "authority unreachable" are treated the same way, so a temporary network cut is harmless well within the grace window.
 
+## What leaves the box
+
+A private deployment is built so your data stays inside your perimeter. The only things a box sends its authority (Central, or — for a child — its master) are what's needed to **license and account for the deployment**:
+
+| What | When | Contents |
+| --- | --- | --- |
+| **Enrolment & heartbeat** | every 5 minutes | Licence status, health, appliance version, last-seen. |
+| **Usage accounting** | once per licensing period | Aggregate **totals and counts** — overall spend for the period, a breakdown by category (agent LLM, sandbox runtime, and your BYOK AI-provider spend) and by model, plus coarse activity counts (active users, sessions). Numbers only. |
+| **Estate roster** *(masters only)* | periodically | The list of a master's children (label, status, version, last-seen), so your organisation's deployment count stays accurate without Central holding a row per child. |
+
+What a box **never** sends, in any mode:
+
+- Your **chats, prompts, or agent output**.
+- Any **credential, key, or secret** — AI-provider keys, cloud credentials, SMTP, database passwords.
+- Your **infrastructure, files, or the data your agents touch**.
+
+The usage payload is deliberately small and self-describing, so your security team can inspect exactly what a box emits before permitting egress. An **air-gapped** box sends none of this at runtime — it accounts against its signed licence locally and reconciles only if and when it can reach its authority. A **child** reports only to your master; only the master talks to Central.
+
 ## Updating
 
 When a newer appliance version is published, the deployment row shows an **update available** badge. To update, on the box:

@@ -2,6 +2,35 @@
 
 **Audience: sysadmin.** You have a fresh Linux/amd64 VPS ([Prerequisites](prerequisites.md)) and the install command an org admin generated in [Register a deployment](register-a-deployment.md). This page runs it and brings the box up.
 
+You can install two ways. The **[guided setup script](#guided-setup-recommended)** walks you through every choice — role, hostname, sandbox images, and sign-in (SSO) — and configures them in one pass; it's the easiest path and the rest of this page's manual steps happen automatically inside it. Or run the **[Central installer directly](#run-the-installer)** and configure the optional bits ([Configuration](configuration.md), [SSO](authentication-and-sso.md)) yourself afterwards.
+
+## Guided setup (recommended)
+
+`setup.sh` is an interactive companion that collects your decisions, writes the box's optional configuration (SSO / SMTP / backups / login policy), then runs the Central installer for you. It doesn't replace the installer — it wraps it, so enrolment and licensing stay identical.
+
+You still register the box in the portal first (that's what mints your voucher); the script needs the install command or voucher it produced.
+
+```bash
+# On the box, as root:
+curl -fsSLO https://raw.githubusercontent.com/clowdops/product-guides/main/cloud-agent/private-deployment/setup.sh
+chmod +x setup.sh
+sudo ./setup.sh
+```
+
+It then asks you, in order:
+
+1. **Voucher** — paste the whole install command from the portal, or just the `fbd_…` token.
+2. **Role** — it reads master/child back from your voucher and confirms it (a public-IP check flags an obvious mismatch).
+3. **Hostname** — the auto `…dply.clowdops.ai` name, or your own (with the DNS-record reminder).
+4. **Sandbox images** — how many runtimes to pre-warm (`chat` only through the full set).
+5. **Sign-in (SSO)** — Google, Microsoft, GitHub, or generic OIDC. For each provider it prints the exact **redirect URL** to register and what to create on the provider's side, then takes your client ID / secret. On an air-gapped child it steers you to an in-network OIDC provider.
+6. **Login policy** — invite-only vs open registration; password sign-in stays on for first install (so you can't lock yourself out).
+7. **Email (SMTP)** and **off-box backups (S3)** — both optional.
+
+Everything is also settable via flags for a non-interactive run (`./setup.sh --help`), and `--dry-run` prints exactly what it would write and run without touching anything. To change SSO or other options later, re-run with `--reconfigure`.
+
+If you'd rather do it by hand, follow the manual steps below instead.
+
 ## Run the installer
 
 SSH to the box and paste the command from the portal, as root:

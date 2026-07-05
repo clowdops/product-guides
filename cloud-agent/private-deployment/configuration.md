@@ -70,7 +70,7 @@ This is covered in its own page: **[Authentication & SSO](authentication-and-sso
 ## What is *not* configured here
 
 - **AI provider keys** (OpenAI, Anthropic, …) and **cloud credentials** (AWS, GCP, Azure, SSH) are entered **in the app UI**, per organisation, and encrypted at rest. They are never environment variables and never leave the box. This is the same "bring your own keys" model as SaaS — see the main [Workspace & credentials](../your-workspace.md) guide.
-- **Billing / Stripe** is disabled on a private deployment. Your usage is covered by the licence; there is no subscription or credit-card surface. Related billing-only admin screens are hidden.
+- **Billing / Stripe** is disabled on a private deployment — there is no self-service subscription or credit-card surface, and the billing-only admin screens are hidden. The commercial basis of a private deployment is your **licence agreement** with ClowdOps, which is where pricing and any usage terms are defined — not the product. For exactly what the box reports to Central under that licence, see [Operations → What leaves the box](operations.md#what-leaves-the-box).
 
 ## Federation values (advanced / manual installs)
 

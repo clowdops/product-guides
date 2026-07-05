@@ -24,6 +24,9 @@ Three things make this simple on the appliance:
 > [!NOTE]
 > **Client secrets never reach the browser.** Only the public client ID and (for OIDC) the issuer URL are sent to the sign-in page. Secrets stay in `operator.env` on the box and are used only in the server-side token exchange.
 
+> [!TIP]
+> The **[guided setup script](install-the-appliance.md#guided-setup-recommended)** configures all of this for you — it prints each provider's redirect URL, collects your client ID and secret, and writes `operator.env`. Run it at install time, or later with `sudo ./setup.sh --reconfigure`. The rest of this page is the manual reference behind what it does.
+
 ### Where the settings go, and applying them
 
 Add the lines shown below to the operator secrets file, then restart the stack:

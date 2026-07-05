@@ -6,9 +6,7 @@
 
 Log in to the portal as an **organisation admin** and go to **Settings → Deployments**.
 
-> _Screenshot placeholder — the Deployments list with the quota pill and **Register deployment** button. See [images/PLACEHOLDERS.md](images/PLACEHOLDERS.md)._
->
-> ![Deployments page](images/deployments-list.png)
+![The Settings → Deployments page: the quota pill, a deployment row with its status badge, and the Register deployment button.](images/deployments-list.png)
 
 The page lists every deployment your organisation runs, each with a live **status** and **last seen** time, and a quota pill (e.g. `1 / 3`) showing how many of your allowed slots are in use. If you're at your cap, decommission one first or ask your ClowdOps contact to raise the limit.
 
@@ -16,9 +14,7 @@ The page lists every deployment your organisation runs, each with a live **statu
 
 Click **Register deployment** to open the dialog.
 
-> _Screenshot placeholder — the Register deployment dialog._
->
-> ![Register deployment dialog](images/register-dialog.png)
+![The Register a deployment dialog, with the Label, Hostname, Child-facing authority URL, Founding admin email, and Propagate users fields.](images/register-dialog.png)
 
 Fill in:
 
@@ -36,9 +32,7 @@ Click **Register**.
 
 The dialog now shows everything the sysadmin needs:
 
-> _Screenshot placeholder — the post-registration panel with the install command and voucher._
->
-> ![Install command](images/install-command.png)
+![The post-registration panel with the install command, the one-time voucher, and the allocated hostname.](images/install-command.png)
 
 | What | Notes |
 | --- | --- |
