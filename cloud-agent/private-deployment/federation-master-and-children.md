@@ -42,6 +42,13 @@ From the **master's own** portal (log in to the master box, **Settings → Deplo
 
 The child enrols with the master, receives a master-signed licence (which chains back to Central's key), and heartbeats to the master. The master rolls its children's count up to Central so your organisation's quota stays accurate — without Central ever seeing the individual child boxes.
 
+### What a child inherits
+
+A child's licence follows its master:
+
+- **Licence type** — a **flat-use** master mints flat children automatically (there's no choice in the child dialog). On a flat master, the register dialog shows how many vCPUs remain in the master's budget for children, and the child's install is refused if the child box is bigger than what's left — resize the box or raise the master's budget (its **Edit** action at Central), then re-run the install. See [Register a deployment → License type](register-a-deployment.md#license-type).
+- **Products** — a child can only carry products its master is licensed for. A master deployed with ClowdInfra only mints ClowdInfra-only children.
+
 ## Air-gapped installs
 
 For a child with no internet at all, the master also acts as a **container-registry mirror**: it serves the appliance images to its children over HTTPS, so they never need `ghcr.io` or `docker.io`. This is restricted to internal source IPs — the private images are never exposed publicly.

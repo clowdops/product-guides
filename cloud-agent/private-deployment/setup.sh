@@ -36,12 +36,19 @@
 #
 # The role (master / child) is decided in the portal and baked into the voucher;
 # this script reads it back and reflects it. Public-IP detection is only a
-# sanity check, never the decision.
+# sanity check, never the decision. The same goes for the LICENCE TYPE
+# (standard / flat use), PRODUCTS, and a flat deployment's vCPU BUDGET — all
+# portal-side registration choices with nothing to configure here. The one way
+# they surface on the box: a FLAT deployment on a host bigger than its licensed
+# budget is refused at enrolment ("box has N vCPUs but only M fit the flat
+# capacity budget"); the verify step below detects that and tells you how to
+# retry (resize or raise the budget, then restart the backend — the voucher
+# survives the refusal).
 # =============================================================================
 
 set -euo pipefail
 
-SETUP_VERSION="1.0.0"
+SETUP_VERSION="1.1.0"
 
 # --- paths (overridable via env, matching the Central installer) -------------
 INSTALL_DIR="${CLOWD_INSTALL_DIR:-/opt/clowd}"
@@ -774,6 +781,17 @@ verify_and_finish() {
     if command -v docker >/dev/null 2>&1; then
         info "Enrolment / heartbeat (backend logs):"
         docker logs clowd-backend-server 2>&1 | grep -i federation | tail -5 || info "(no federation lines yet — give it a minute)"
+        # Flat-licence capacity refusal: the enrolment (not the installer) is
+        # what gets refused, so the stack is up but unlicensed. Detect it and
+        # say exactly how to retry — this is recoverable without re-registering.
+        if docker logs clowd-backend-server 2>&1 | grep -q "fit the flat capacity budget"; then
+            warn "Enrolment was REFUSED: this box has more vCPUs ($(nproc 2>/dev/null || echo '?')) than its flat-licence budget allows."
+            info "Fix one side, then retry — the voucher survives the refusal:"
+            info "  - resize this box down to fit, OR"
+            info "  - have the org admin raise the deployment's vCPU budget in the portal"
+            info "    (Settings -> Deployments -> the row's Edit action; for a child, raise the MASTER's budget)."
+            info "Then retry enrolment with:  docker restart clowd-backend-server"
+        fi
     fi
     if [[ $SITE_HOST != "<your-appliance-host>" ]]; then
         info "Advertised sign-in providers:"

@@ -81,7 +81,7 @@ docker logs clowd-backend-server 2>&1 | grep -i federation
 sudo cat /etc/clowd/secrets/federation/license.json
 ```
 
-If it doesn't reach `active`, see [Operations → Troubleshooting](operations.md#troubleshooting).
+If it doesn't reach `active`, see [Operations → Troubleshooting](operations.md#troubleshooting). In particular, a **flat-use** deployment on a box bigger than its licensed vCPU budget is refused at enrolment with `box has N vCPUs but only M fit the flat capacity budget` — resize the box or have the org admin raise the budget, then `docker restart clowd-backend-server` to retry (the voucher survives the refusal).
 
 ## TLS and the hostname
 

@@ -20,9 +20,13 @@ A healthy install progresses `registered → enrolled → active` within a few m
 
 Your organisation has a **deployment quota** (default **3**), shown as a pill on the Deployments page (e.g. `2 / 3`). Registering counts against it; **decommissioning** frees a slot. To raise the cap, contact your ClowdOps representative.
 
+Organisations with **flat-use** licences also have a **flat capacity pool** (in vCPUs), shown as a second pill (e.g. `8 / 12 vCPU`). Each flat deployment's vCPU budget reserves from it; decommissioning releases the reservation. See [Register a deployment → License type](register-a-deployment.md#license-type).
+
 ## Licences, grace, and degraded operation
 
 A private deployment runs on a **signed, offline-verifiable licence** — valid **365 days**, renewed automatically while the box can reach its authority. There's no Stripe, no card, nothing to click monthly.
+
+The licence carries the deployment's entitlements: seats, its **products**, and — for **flat-use** deployments — its **vCPU capacity**. Changes made in the portal (editing a deployment's products or budget, or your organisation's entitlements changing) reach a running box automatically within a few minutes: the box notices on its next heartbeat and refreshes its licence with no restart. A flat box that has been resized **above** its licensed capacity shows a warning on its row and in the app; resize it down or raise its budget to clear it (only then, and only after a long grace period with enforcement enabled, would new sessions be refused — running work is never killed).
 
 If the licence lapses, or the box can't reach its authority, it does **not** shut off. It degrades gracefully, in this order:
 
@@ -38,7 +42,7 @@ A private deployment is built so your data stays inside your perimeter. The only
 
 | What | When | Contents |
 | --- | --- | --- |
-| **Enrolment & heartbeat** | every 5 minutes | Licence status, health, appliance version, last-seen. |
+| **Enrolment & heartbeat** | every 5 minutes | Licence status, health, appliance version, last-seen, and the box's **host size** (vCPU and RAM counts — two numbers, used to verify flat-licence capacity). |
 | **Usage accounting** | once per licensing period | Aggregate **totals and counts** — overall spend for the period, a breakdown by category (agent LLM, sandbox runtime, and your BYOK AI-provider spend) and by model, plus coarse activity counts (active users, sessions). Numbers only. |
 | **Estate roster** *(masters only)* | periodically | The list of a master's children (label, status, version, last-seen), so your organisation's deployment count stays accurate without Central holding a row per child. |
 
@@ -93,6 +97,7 @@ A decommissioned row stays in the list (greyed out) until you **Delete** it, whi
 | Symptom | Cause & fix |
 | --- | --- |
 | **Voucher rejected** | Expired (72 h lifetime) or already used. Re-register in the portal for a fresh command. |
+| **Enrolment refused: "box has N vCPUs but only M fit the flat capacity budget"** | The box is bigger than its flat licence allows. Resize the box down, or raise the deployment's vCPU budget (its **Edit** action in the portal — on a child, edit the *master's* budget), then retry: `docker restart clowd-backend-server` (the voucher survives the refusal; re-running the installer also works). |
 | **Status stuck at `enrolled`, never `active`** | Heartbeats aren't reaching the authority. Check the box can egress to `platform.clowdops.ai` (or its master), then read `docker logs clowd-backend-server 2>&1 \| grep -i federation`. |
 | **No HTTPS yet** | DNS still propagating, or port 80 blocked so Let's Encrypt can't validate. The box runs on plain HTTP until the certificate lands; enrolment/heartbeats work regardless. Confirm the A record and that port 80 is open. |
 | **Out-of-memory / containers restarting on boot** | Host too small. 8 GB boots but the agent needs 16 GB+. Resize, or install with `--sandbox-images=none` and avoid running the agent. |

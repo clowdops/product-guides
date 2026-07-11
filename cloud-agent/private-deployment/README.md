@@ -4,7 +4,7 @@
 
 A **private deployment** runs the entire ClowdOps stack on hardware you control — your own VPS, your own domain, your own data. The agent, its sandboxes, the database, and every credential stay inside your perimeter. Nothing routes through ClowdOps' shared infrastructure.
 
-You still get the full product: chat, sandboxes, schedules, guardrails, notifications. What changes is *where it runs* and *how it's licensed* — a signed, offline-verifiable licence instead of a monthly Stripe subscription.
+You still get the full product: chat, sandboxes, schedules, guardrails, notifications. What changes is *where it runs* and *how it's licensed* — a signed, offline-verifiable licence instead of a monthly Stripe subscription. Licences come in two shapes: **standard** (usage-metered per your agreement) and **flat use** (no usage billing at all — the box's vCPU capacity is licensed instead; see [Register a deployment → License type](register-a-deployment.md#license-type)).
 
 > [!NOTE]
 > This guide has two audiences. **Org admins** register the deployment and manage it from the ClowdOps portal — start at [Register a deployment](register-a-deployment.md). **Sysadmins** provision the Linux host and run the installer — start at [Prerequisites](prerequisites.md) then [Install the appliance](install-the-appliance.md).
@@ -42,6 +42,7 @@ That's the whole thing. The rest of this guide covers the details of each step, 
 | Setting | Default | Meaning |
 | --- | --- | --- |
 | Deployment quota | 3 per organisation | How many live deployments you can run. Ask your ClowdOps contact to raise it. |
+| Flat capacity pool | 0 vCPUs | How many vCPUs your **flat-use** deployments may reserve in total. 0 means flat licences aren't enabled — ask your ClowdOps contact to grant capacity. |
 | Voucher lifetime | 72 hours | A registration voucher expires if unused. Re-register to get a fresh one. |
 | Licence validity | 365 days | Renewed automatically while the box can reach its authority. |
 | Grace period | 21 days | How long a box keeps working after its licence lapses or its authority goes silent. |

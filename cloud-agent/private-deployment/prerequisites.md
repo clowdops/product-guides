@@ -17,6 +17,9 @@ A **fresh, dedicated Linux/amd64 VPS**. Don't co-locate it with other workloads 
 > [!NOTE]
 > The installer pre-warms sandbox runtime images so the agent works instantly. The full set is large. If disk or bandwidth is tight, you can pull fewer — see the `--sandbox-images` flag in [Install the appliance](install-the-appliance.md).
 
+> [!IMPORTANT]
+> **Flat-use licence?** The box's vCPU count (what `nproc` reports) is verified against the deployment's licensed budget when the installer runs — an oversized box is refused with a clear message before anything is consumed. Confirm the size with whoever registered the deployment ([Register a deployment → License type](register-a-deployment.md#license-type)) before provisioning.
+
 ## Docker
 
 Docker Engine with the Compose plugin. **You don't have to install it yourself** — the install command does it if it's missing. If you prefer to pre-install, any recent Docker Engine works; verify with `docker info`.
