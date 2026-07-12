@@ -150,6 +150,18 @@ confirm() { # confirm "prompt" default(yes|no) -> returns 0 for yes
 # json_get KEY <<< json — pull a flat string field, same approach as install.sh.
 json_get() { sed -n "s/.*\"$1\":\"\([^\"]*\)\".*/\1/p" | head -1; }
 
+# authority_base CMD — derive the authority base URL from a pasted install command,
+# PRESERVING any path prefix (a Central served under a subpath, e.g. /api on preview).
+# Takes everything up to '/install.sh'; falls back to scheme+host if malformed. Without
+# this, a '.../api/install.sh' command would collapse to the bare host and every
+# '$AUTHORITY_URL/federation/...' + '$AUTHORITY_URL/install.sh' call would 404 / hit the SPA.
+authority_base() {
+    local u
+    u="$(printf '%s' "$1" | grep -oE 'https?://[^ ]+/install\.sh' | head -1 | sed -E 's#/install\.sh$##' || true)"
+    [[ -z $u ]] && u="$(printf '%s' "$1" | grep -oE 'https?://[^/ ]+' | head -1 || true)"
+    printf '%s' "${u%/}"
+}
+
 need_cmd() { command -v "$1" >/dev/null 2>&1 || die "$1 is required but not installed"; }
 
 # existing_val KEY — read a value already in operator.env (used as prompt default
@@ -261,9 +273,10 @@ parse_args() {
         esac
     done
 
-    # A pasted install command carries both the authority (the curl host) and token.
+    # A pasted install command carries both the authority (the curl base URL,
+    # path prefix included) and token.
     if [[ -n $INSTALL_COMMAND ]]; then
-        v="$(printf '%s' "$INSTALL_COMMAND" | grep -oE 'https?://[^/ ]+' | head -1 || true)"
+        v="$(authority_base "$INSTALL_COMMAND")"
         [[ -n $v ]] && AUTHORITY_URL="$v"
         v="$(printf '%s' "$INSTALL_COMMAND" | grep -oE -- '--token=[^ ]+' | head -1 | cut -d= -f2 || true)"
         [[ -n $v ]] && TOKEN="$v"
@@ -304,7 +317,7 @@ preflight() {
             info "Paste the install command from the portal, or just the voucher."
             ask INSTALL_COMMAND "Install command (blank to enter the voucher directly)"
             if [[ -n $INSTALL_COMMAND ]]; then
-                v="$(printf '%s' "$INSTALL_COMMAND" | grep -oE 'https?://[^/ ]+' | head -1 || true)"; [[ -n $v ]] && AUTHORITY_URL="${v%/}"
+                v="$(authority_base "$INSTALL_COMMAND")"; [[ -n $v ]] && AUTHORITY_URL="$v"
                 v="$(printf '%s' "$INSTALL_COMMAND" | grep -oE -- '--token=[^ ]+' | head -1 | cut -d= -f2 || true)"; [[ -n $v ]] && TOKEN="$v"
             fi
             [[ -n $TOKEN ]] || ask TOKEN "Voucher (fbd_...)"
@@ -780,11 +793,22 @@ verify_and_finish() {
     step "Verify"
     if command -v docker >/dev/null 2>&1; then
         info "Enrolment / heartbeat (backend logs):"
+        # The backend enrols ASYNCHRONOUSLY on boot, so a one-shot check races it —
+        # and the flat-capacity refusal is an ERROR line that can lag the stdout
+        # INFO/WARN lines in `docker logs`. Poll a bounded window (~90s) for a
+        # terminal outcome (enrolled OR refused) before reporting, so the refusal
+        # guidance below isn't silently skipped just because we looked too early.
+        local _fed_refused="" _i
+        for _i in $(seq 1 45); do
+            if docker logs clowd-backend-server 2>&1 | grep -q "fit the flat capacity budget"; then _fed_refused=1; break; fi
+            if docker logs clowd-backend-server 2>&1 | grep -q "federation: enrolled"; then break; fi
+            sleep 2
+        done
         docker logs clowd-backend-server 2>&1 | grep -i federation | tail -5 || info "(no federation lines yet — give it a minute)"
         # Flat-licence capacity refusal: the enrolment (not the installer) is
         # what gets refused, so the stack is up but unlicensed. Detect it and
         # say exactly how to retry — this is recoverable without re-registering.
-        if docker logs clowd-backend-server 2>&1 | grep -q "fit the flat capacity budget"; then
+        if [[ -n $_fed_refused ]] || docker logs clowd-backend-server 2>&1 | grep -q "fit the flat capacity budget"; then
             warn "Enrolment was REFUSED: this box has more vCPUs ($(nproc 2>/dev/null || echo '?')) than its flat-licence budget allows."
             info "Fix one side, then retry — the voucher survives the refusal:"
             info "  - resize this box down to fit, OR"
