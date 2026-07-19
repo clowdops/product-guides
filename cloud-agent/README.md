@@ -1,6 +1,8 @@
-# ClowdOps (Preview)
+[← All ClowdOps docs](../README.md)
 
-**[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Schedules](schedules.md)** · **[Notifications](notifications.md)** · **[Chats & history](chats.md)** · **[External agents (MCP)](mcp.md)** · **[Telegram](tg.md)** · **[Resources](resources.md)** · **[Guardrails & cost caps](guardrails.md)** · **[Team & settings](team-and-settings.md)** · **[Referrals](referrals.md)**
+# ClowdInfra — the cloud infrastructure agent (Preview)
+
+**[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Schedules](schedules.md)** · **[Notifications](notifications.md)** · **[Chats & history](chats.md)** · **[External agents (MCP)](mcp.md)** · **[Telegram](tg.md)** · **[Resources](resources.md)** · **[Guardrails & cost caps](guardrails.md)** · **[Account & settings](../common/settings.md)** · **[Referrals](../common/referrals.md)**
 
 ClowdOps is a chat-oriented interface for running AI agents against your cloud infrastructure. You describe a task in plain language, and the agent plans and executes it — querying resources, calling APIs, running code, and reasoning over results — all within the credentials, guardrails, and budget you define.
 
@@ -43,8 +45,8 @@ The right posture is to use both: scope credentials to the minimum your use case
 | [Cloud Resources](resources.md) | Explore the discovered resource inventory |
 | [Notifications](notifications.md) | Push alerts and digests to Slack, Teams, PagerDuty, Telegram, or email |
 | [Guardrails & cost caps](guardrails.md) | Categorical permissions, USD budgets, and where to set them |
-| [Team & Settings](team-and-settings.md) | Members, billing, plan, and account settings |
-| [Referrals](referrals.md) | Invite other teams with a referral code — both sides earn credit |
+| [Account & Settings](../common/settings.md) | Members, billing, plan, and account settings *(shared across products)* |
+| [Referrals](../common/referrals.md) | Invite other teams with a referral code — both sides earn credit *(shared across products)* |
 | [Private Deployment](private-deployment/README.md) | Run the whole ClowdOps stack on your own VPS or air-gapped network |
 | [Credential Setup Recipes](credentials/README.md) | Ready-to-run setup guides for DevOps, FinOps, SecOps, VCS, and SSH |
-| [Agent Usage Guidelines](Agent%20usage%20guidelines/README.md) | When to reach for the agent vs a pipeline, where it earns its keep, and how to design and bound a task |
+| [Agent Usage Guidelines](agent-usage-guidelines/README.md) | When to reach for the agent vs a pipeline, where it earns its keep, and how to design and bound a task |

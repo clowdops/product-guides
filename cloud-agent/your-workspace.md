@@ -116,5 +116,5 @@ The process is the same as for other credentials: click **Add notification chann
 For a step-by-step setup guide for each provider (including CLI examples), see [Credential Setup Recipes](credentials/README.md).
 
 Once a channel is attached to a sandbox, the agent can use it in two ways:
-- **Ad-hoc during chat** — ask the agent to *"post this finding to Slack"* and it will call the `notify` tool (see [Sending notifications from chat](chat.md#sending-notifications)).
+- **Ad-hoc during chat** — ask the agent to *"post this finding to Slack"* and it will call the `notify` tool (see [Sending notifications from chat](chat.md#notifications)).
 - **Automatic schedule digests** — configure a channel on a schedule and the platform posts a summary after each run (see [Post-run digest](schedules.md#step-6-post-run-digest)).

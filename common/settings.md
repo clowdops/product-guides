@@ -1,10 +1,15 @@
-[← ClowdOps](README.md) · [← Guardrails & cost caps](guardrails.md)
+[← Docs](../README.md) · [Common](README.md) · [Referrals →](referrals.md)
 
-# Team & Settings
+# Account & Settings
 
-**On this page:** [Profile](#profile) · [Security](#security) · [Organisation](#organisation) · [Members](#members) · [Plan](#plan) · [Billing](#billing) · [Usage](#usage) · [Activity](#activity)
+**On this page:** [Profile](#profile) · [Security](#security) · [Organisation](#organisation) · [Members](#members) · [Deployments](#deployments) · [Plan](#plan) · [Billing](#billing) · [Usage](#usage) · [System notifications](#system-notifications) · [Referrals](#referrals) · [Activity](#activity)
 
-Access organisation-wide settings and your account via the **Settings** icon at the bottom of the left sidebar.
+Settings are **shared across every ClowdOps product**. Your organisation, members, plan, credit balance, and spend dashboard are the same whether you are working in [ClowdInfra](../cloud-agent/README.md) or [ClowdBI](../bi-agent/README.md) — switching products does not change any of them.
+
+Open settings via the **Settings** entry at the bottom of the left sidebar. The back button returns you to whichever product you came from.
+
+> [!NOTE]
+> **A note on vocabulary.** Both products nest their work under your organisation, but they name the middle layer differently: ClowdInfra uses **projects** containing **sandboxes**, ClowdBI uses **data projects**. Where this page says *"the scope below your organisation"*, read whichever applies to the product you are in.
 
 ## Profile
 
@@ -21,6 +26,8 @@ Manage multi-factor authentication under **Security**:
 ## Organisation
 
 Update your organisation's display name and website under **Organisation**. These fields are visible to all members and appear on invoices.
+
+This section is available to organisation administrators.
 
 ## Members
 
@@ -39,10 +46,25 @@ The invitee receives an email with a join link. They must create an account (or 
 
 | Role | Access level |
 | --- | --- |
-| **Admin** | Full access: manage members, billing, all projects and sandboxes |
-| **Member** | Access to projects and sandboxes they are invited to |
+| **Admin** | Full access: manage members, billing, and every scope in the organisation |
+| **Member** | Access to the projects and scopes they are invited to |
 
 Update or remove a member at any time from the Members list.
+
+> [!TIP]
+> Membership is organisation-wide, not per-product. Which products a member can actually open depends on what your organisation is entitled to — see [Product entitlement](#product-entitlement) below.
+
+### Product entitlement
+
+An organisation is entitled to one or more products. When you have more than one, logging in lands you on the **product hub** — a chooser showing each product you can enter. If you only have one, you go straight into it.
+
+If a colleague reports *"ClowdBI isn't enabled for your organization yet"*, the product has not been enabled for your org — an administrator can turn it on.
+
+## Deployments
+
+Organisations running ClowdOps on their own infrastructure manage their appliances under **Deployments**: register a new deployment, view its status and last-seen heartbeat, and see when an update is available.
+
+For the full self-hosting guide — prerequisites, install, federation, and day-2 operations — see [Private Deployment](../cloud-agent/private-deployment/README.md).
 
 ## Plan
 
@@ -66,11 +88,14 @@ Every organisation always has an active plan. New orgs start on the **Free** tie
 
 Picking a higher tier mid-cycle upgrades you immediately; the new cycle's grant and cap apply from the change.
 
+> [!NOTE]
+> One plan covers your whole organisation across every product. Spend in ClowdInfra and ClowdBI draws on the same credit balance and counts toward the same daily cap.
+
 ## Billing
 
 The **Billing** page is your account view: your current subscription status (with upgrade / cancel), your credit balances, and recent transactions. The storefront for *buying* plans and credit packs lives on the [Plans & credits](#plan) page.
 
-<!-- Screenshot: ![Billing page — three stat cards, buy-credits tile, transactions list](./images/cloud-agent-billing-page.png) -->
+<!-- Screenshot: ![Billing page — three stat cards, buy-credits tile, transactions list](images/settings-billing-page.png) -->
 
 ### Two credit buckets
 
@@ -108,10 +133,10 @@ The transactions list shows the latest 25 credit movements with friendly labels:
 
 | Label | What it represents |
 | --- | --- |
-| **Platform LLM** | LLM-token spend when the sandbox uses platform-provided AI keys (billed to your balance, with the platform surcharge applied) |
+| **Platform LLM** | LLM-token spend when the agent uses platform-provided AI keys (billed to your balance, with the platform surcharge applied) |
 | **BYOK LLM (metered)** | The small metered usage fee on LLM calls made with your own keys (the token cost itself is on your AI provider's bill) |
 | **Agent** | The agent service markup applied on top of LLM spend |
-| **Sandbox compute** | Wall-clock seconds the agent's sandbox stayed warm |
+| **Sandbox compute** | Wall-clock seconds the agent's execution environment stayed warm |
 | **Credit pack** | A PAYG top-up you purchased |
 | **Subscription (initial)** | First grant when you signed up for a plan |
 | **Subscription (renewal)** | Cycle renewal grant (the bucket resets to this value) |
@@ -129,15 +154,15 @@ Subscription plans include a **24-hour rolling spend cap** as a safety brake. If
 
 The **Usage** page is a real-time dashboard of agent spend.
 
-<img src="./images/sandbox_usage_tab.png" alt="Usage dashboard — KPI strip, cost-by-type chart, and filter chips" width="100%">
+<img src="../cloud-agent/images/sandbox_usage_tab.png" alt="Usage dashboard — KPI strip, cost-by-type chart, and filter chips" width="100%">
 
-The same dashboard appears at four scopes; the breadth of data narrows accordingly:
+The same dashboard appears at every scope; the breadth of data narrows accordingly:
 
 | Where | Scope |
 | --- | --- |
-| Settings → Usage | Whole organisation |
-| Project → Usage | One project (all its sandboxes) |
-| Sandbox → Usage | One sandbox (all its chats) |
+| Settings → Usage | Whole organisation (all products) |
+| Project → Usage | One project and everything under it |
+| Sandbox / data project → Usage | One execution scope and all its chats |
 | (per-chat view) | A single chat session |
 
 Each scope shows:
@@ -155,11 +180,34 @@ If your role allows it, a pencil icon next to the cost KPI opens the budget edit
 - **Daily** USD cap
 - **Monthly** USD cap
 - **Per-chat-session** USD cap
-- The **allowed action categories** for this scope ([Guardrails & cost caps](guardrails.md))
-- **Max consecutive failures** before [scheduled runs](schedules.md) auto-disable
+- The **allowed action categories** for this scope
+- **Max consecutive failures** before unattended runs auto-disable
 
-Children scopes inherit from parents. The editor surfaces the parent's value as a hint and clamps inputs above the parent cap. See [Guardrails & cost caps](guardrails.md) for the full inheritance model and the permissions required to edit each scope.
+Child scopes inherit from parents: a child can be stricter than its parent but never more permissive. The editor surfaces the parent's value as a hint and clamps inputs above the parent cap.
+
+> [!NOTE]
+> **Action categories only bite where a product can actually change something.** They are central to ClowdInfra, whose agent provisions and modifies real infrastructure — see [Guardrails & cost caps](../cloud-agent/guardrails.md). ClowdBI's agent is read-only against your data sources by construction: it has no tool that can write, so the categories have nothing to gate there. USD caps apply to both.
+
+| Scope | Role required to edit |
+| --- | --- |
+| Organisation | Org **Owner** / **Administrator**, or a role with the **Workspaces** permission bit |
+| Project | Project **Admin**, or any of the org roles above |
+| Sandbox / data project | Same as the parent project |
+| Chat session | Only the user who created the chat |
+
+## System notifications
+
+Organisation administrators can configure where **platform-level** alerts are delivered — billing warnings, credit exhaustion, and similar account events. This is separate from the notification channels an agent uses mid-run to message your team.
+
+<img src="../cloud-agent/images/settings_system_notifications.png" alt="System notifications settings — channel configuration" width="100%">
+
+## Referrals
+
+Mint and track referral codes under **Settings → Referrals**. Both the referring and the referred organisation earn credit once the referred org qualifies. See [Referrals](referrals.md) for the full program.
 
 ## Activity
 
-The **Activity** log shows an event history for your organisation: logins, configuration changes, member invites, credential updates, and more. Use it for audit or compliance purposes.
+The **Activity** log shows an event history for your organisation: logins, configuration changes, member invites, credential updates, exports, and more. Use it for audit or compliance purposes.
+
+> [!TIP]
+> ClowdBI writes additional governance events here — snapshot creation, dashboard exports, external share links, and personal-data audit records. See [Data privacy & personal data](../bi-agent/data-privacy.md#the-audit-trail).

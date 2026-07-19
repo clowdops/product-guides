@@ -1,4 +1,4 @@
-[← ClowdOps](README.md) · [← Team & settings](team-and-settings.md)
+[← Docs](../README.md) · [Common](README.md) · [← Account & settings](settings.md)
 
 # Referrals
 
@@ -66,4 +66,4 @@ The **Settings → Referrals** page shows a live stats panel for the codes you o
 | **Qualified** | How many have crossed the spend threshold and triggered a reward |
 | **Credits earned** | The total referrer credit granted to your balance so far |
 
-Granted referrer credits land in your **PAYG bucket** and appear in your transaction history on the [Billing page](team-and-settings.md#billing).
+Granted referrer credits land in your **PAYG bucket** and appear in your transaction history on the [Billing page](settings.md#billing).

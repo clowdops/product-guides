@@ -1,4 +1,4 @@
-[← ClowdOps](README.md) · [← Resources](resources.md) · [Team & settings →](team-and-settings.md)
+[← ClowdOps](README.md) · [← Resources](resources.md) · [Account & settings →](../common/settings.md)
 
 # Guardrails & cost caps
 
