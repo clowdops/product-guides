@@ -2,7 +2,7 @@
 
 # Guardrails & cost caps
 
-**On this page:** [The two axes](#the-two-axes) · [Categorical grants](#categorical-grants) · [USD cost caps](#usd-cost-caps) · [Hierarchical inheritance](#hierarchical-inheritance) · [Where to configure](#where-to-configure) · [Who can edit what](#who-can-edit-what) · [In-chat confirmation](#in-chat-confirmation) · [Scheduled runs](#scheduled-runs) · [Auto-disable on consecutive failures](#auto-disable-on-consecutive-failures)
+**On this page:** [The two axes](#the-two-axes) · [Categorical grants](#categorical-grants) · [USD cost caps](#usd-cost-caps) · [Hierarchical inheritance](#hierarchical-inheritance) · [Where to configure](#where-to-configure) · [Who can edit what](#who-can-edit-what) · [In-chat confirmation](#in-chat-confirmation) · [Scheduled runs](#scheduled-runs) · [Deferring to a person instead of denying](#deferring-to-a-person-instead-of-denying) · [Auto-disable on consecutive failures](#auto-disable-on-consecutive-failures)
 
 ClowdOps gives the agent enough freedom to be useful and enough rails to be safe. Two independent controls govern what an agent run can do and how much it can spend.
 
@@ -122,10 +122,27 @@ The confirmation axis is purely UX — it only fires for categories the grant ch
 A scheduled run has no human attached, so the confirmation card has nowhere to land. The rules change accordingly:
 
 - The agent **cannot ask clarifying questions** (the `ask_user` tool is removed).
-- Any category that would normally request confirmation is **denied** unless the schedule's own allowlist explicitly pre-approves it.
+- Any category that would normally request confirmation is **denied** unless the schedule's own allowlist explicitly pre-approves it — or the action class is configured to [defer to a person](#deferring-to-a-person-instead-of-denying) instead, in which case it is queued rather than refused.
 - The effective allowlist for a scheduled action is **the sandbox grant ∩ the schedule's allowlist**. Both must permit the category.
 
 Set the per-schedule allowlist when [creating a schedule](schedules.md#allowed-actions). Keep it to the minimum the prompt actually needs.
+
+## Deferring to a person instead of denying
+
+Denial is not the only outcome available to an unattended run. Some action classes are configured to **gate** rather than forbid: instead of refusing, the run records exactly what it wanted to do, **queues it for a person**, and carries on with the rest of its work.
+
+The queued action waits in [Approvals](../common/approvals.md) until somebody approves it, rejects it, or its window expires.
+
+| Outcome | What the run does | Where the decision happens |
+| --- | --- | --- |
+| **Allowed** | Performs the action | Nowhere — policy already permits it |
+| **Gated** | Records the exact payload and continues | [Approvals](../common/approvals.md), whenever somebody looks |
+| **Forbidden** | Receives a denial and reacts | Nowhere — policy already refused it |
+
+> [!IMPORTANT]
+> **Approving runs exactly the payload that was recorded.** Nothing is re-planned or re-generated when the approval lands, which is what makes the decision meaningful — you are approving the thing you read, not authorising a fresh attempt.
+
+This changes the calculus for schedules. Previously the choice was between pre-approving a category outright and having the schedule come back blocked. Gating gives you the middle option: the run completes, and the one step needing judgement waits for it.
 
 ## Auto-disable on consecutive failures
 

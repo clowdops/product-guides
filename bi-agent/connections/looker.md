@@ -83,3 +83,5 @@ Of the three platforms, Looker generally gives the most faithful results out of 
 | Some explores missing | Model-level permission gaps | Check `see_lookml` / model access for the user's role |
 | Queries fail with permission errors | The role lacks `explore` on that model | Update the role in Looker Admin |
 | Numbers differ from what a colleague sees in Looker | Access filters on the connected user, or a different explore | Confirm which explore was queried via the model chip and **Show query** |
+| The API3 secret was rotated | The stored secret no longer matches | **Edit** the connection on the project's Connections tab and paste the new secret — see [Managing an existing connection](README.md#managing-an-existing-connection) |
+| Teammates get nothing from a shared connection | It has not been [published](README.md#publishing-a-shared-connection), or the publication was revoked | Publish it |

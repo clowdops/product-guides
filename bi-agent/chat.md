@@ -2,7 +2,7 @@
 
 # Asking questions
 
-**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [Reading the answer](#reading-the-answer) · [Showing the query](#showing-the-query) · [Clarifying questions](#clarifying-questions) · [Exporting a result](#exporting-a-result) · [Turning an answer into a dashboard](#turning-an-answer-into-a-dashboard) · [When the agent cannot answer](#when-the-agent-cannot-answer) · [Cost and stopping](#cost-and-stopping) · [Conversation history](#conversation-history)
+**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [Reading the answer](#reading-the-answer) · [Citations and coverage](#citations-and-coverage) · [Showing the query](#showing-the-query) · [Clarifying questions](#clarifying-questions) · [Exporting a result](#exporting-a-result) · [Turning an answer into a dashboard](#turning-an-answer-into-a-dashboard) · [When the agent cannot answer](#when-the-agent-cannot-answer) · [Cost and stopping](#cost-and-stopping) · [Conversation history](#conversation-history)
 
 Chat is how you use ClowdBI. Every conversation runs within the selected [data project](data-projects.md), against its connected models.
 
@@ -52,13 +52,34 @@ When more than one view fits, chips let you switch between them. Tables are sort
 
 In a project with several models, a **model chip** shows which one produced the answer.
 
+## Citations and coverage
+
+Every factual sentence in an answer carries a superscript marker linking it back to the query that produced it:
+
+> Revenue was €4.2M in Q3 `[1]`, up 12% on Q2 `[2]`.
+
+Click a marker to see the evidence — the recorded query, its result, and what it was pinned to. A **⚠** instead of a number means the agent stated a fact that no query run this turn supports.
+
+Beneath every annotated answer sits a **coverage line** summarising how grounded it is — *"all 6 facts cited"*, or *"6 facts · 4 cited · 2 uncited ⚠"*. It is always there, including when everything checks out, because silence would be ambiguous.
+
+<!-- Screenshot: ![An answer with inline citation markers and the coverage line](images/chat-citations.png) -->
+
+Interpretations and recommendations are not marked by default; a **show sentence types** toggle on the coverage line reveals them, so you can see which parts of an answer are measurement and which are the agent's reading of it.
+
+> [!TIP]
+> Scan the coverage line before acting on an answer. *"All facts cited"* means every number traces to a query you can inspect. Anything less is telling you exactly where to look.
+
+The full model — evidence grades, pins, the *checked* marker, and what happens when evidence cannot be shown — is in **[Evidence & citations](evidence.md)**.
+
 ## Showing the query
 
-Every answer carries a **Show query** disclosure with the exact query that ran — DAX for Power BI, a Looker query, a VizQL request for Tableau.
+Every answer also carries a **Show query** disclosure with the exact query that ran — DAX for Power BI, a Looker query, a VizQL request for Tableau. It is the same recorded query the evidence panel shows, reached from the answer as a whole rather than from one claim.
 
 <!-- Screenshot: ![Show query disclosure expanded, revealing DAX](images/chat-show-query.png) -->
 
 This is the single most useful habit to build in ClowdBI. When a number looks surprising, the query tells you immediately whether the agent understood the question — which measure it used, how it filtered, what it grouped by. Far quicker than re-asking and hoping.
+
+Use whichever route fits what you are checking: **Show query** when you want to see how the answer as a whole was produced, a **citation marker** when one specific number looks wrong.
 
 > [!TIP]
 > Copy the query into your BI tool to verify it independently, or hand it to whoever owns the model when something looks off.

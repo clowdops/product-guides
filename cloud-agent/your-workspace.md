@@ -2,7 +2,7 @@
 
 # Projects, Sandboxes & Credentials
 
-**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [Credentials](#credentials) · [How your keys stay private at rest](#how-your-keys-stay-private-at-rest) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials) · [Notification channels](#notification-channels)
+**On this page:** [Projects and sandboxes](#projects-and-sandboxes) · [The project tabs](#the-project-tabs) · [Credentials](#credentials) · [How your keys stay private at rest](#how-your-keys-stay-private-at-rest) · [Cloud credentials](#cloud-credentials) · [AI credentials](#ai-credentials) · [Notification channels](#notification-channels) · [Seeing what your credentials reach](#seeing-what-your-credentials-reach)
 
 
 ## Projects and sandboxes
@@ -15,6 +15,22 @@ Switch between projects and sandboxes at any time using the dropdowns at the top
 
 > [!TIP]
 > To rename a project or sandbox, hover its name in the page header and click the pencil. Edit inline and press **Enter** to save (or **Escape** to cancel).
+
+## The project tabs
+
+Opening a project gives you a tabbed view of everything scoped to it:
+
+| Tab | What it holds |
+| --- | --- |
+| **Members** | Who has access to this project, and at what level |
+| **Credentials** | The cloud, VCS, SSH, AI and notification credentials described below |
+| **Usage** | Spend for this project and everything under it, plus the [budget editor](guardrails.md#where-to-configure) |
+| **Artifacts** | The project's [documents](artifacts.md) — digests, briefs and reports the agent drafts and your team approves |
+
+A **budget pill** in the header shows today's spend against the effective daily cap; click it to jump to Usage.
+
+> [!NOTE]
+> ClowdBI uses the same shell for its [data projects](../bi-agent/data-projects.md), with its own tab set. If you work in both products, the navigation is the same shape in each.
 
 ---
 
@@ -118,3 +134,16 @@ For a step-by-step setup guide for each provider (including CLI examples), see [
 Once a channel is attached to a sandbox, the agent can use it in two ways:
 - **Ad-hoc during chat** — ask the agent to *"post this finding to Slack"* and it will call the `notify` tool (see [Sending notifications from chat](chat.md#notifications)).
 - **Automatic schedule digests** — configure a channel on a schedule and the platform posts a summary after each run (see [Post-run digest](schedules.md#step-6-post-run-digest)).
+
+## Seeing what your credentials reach
+
+A credential is a secret you configured. The **system it reaches** — a cloud account, a Slack workspace, an SMTP host — is what actually breaks, and several credentials often point at the same one.
+
+**Settings → Connections** lists those systems for the selected project, with the health the platform has observed for each: *healthy*, *expiring*, *degraded*, *broken*, *unknown*, or *disabled*.
+
+Health is derived from real deliveries and real token refreshes, never from a synthetic poll — so a credential nothing has used recently stays *unknown* rather than being called healthy on the strength of a ping, and a credential that broke is usually flagged before anybody notices.
+
+> [!TIP]
+> When queries or notifications start failing, check Connections before re-entering credentials. It will usually tell you *which* external system is rejecting you and why — which is a shorter path than re-creating a credential that was never the problem.
+
+Full page: **[Connections](../common/connections.md)**.

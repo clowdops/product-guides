@@ -2,7 +2,7 @@
 
 # Dashboards
 
-**On this page:** [Living boards, not screenshots](#living-boards-not-screenshots) · [Building one](#building-one) · [Refining it](#refining-it) · [Editing the layout](#editing-the-layout) · [Parameters and filtering](#parameters-and-filtering) · [Who can see a dashboard](#who-can-see-a-dashboard) · [Snapshots](#snapshots) · [Sharing a snapshot](#sharing-a-snapshot) · [Exporting](#exporting) · [When a panel breaks](#when-a-panel-breaks) · [Version history](#version-history)
+**On this page:** [Living boards, not screenshots](#living-boards-not-screenshots) · [Building one](#building-one) · [Refining it](#refining-it) · [Time grain](#time-grain) · [Editing the layout](#editing-the-layout) · [Parameters and filtering](#parameters-and-filtering) · [Who can see a dashboard](#who-can-see-a-dashboard) · [Snapshots](#snapshots) · [Sharing a snapshot](#sharing-a-snapshot) · [Exporting](#exporting) · [When a panel breaks](#when-a-panel-breaks) · [Version history](#version-history)
 
 ## Living boards, not screenshots
 
@@ -41,6 +41,23 @@ To change a board you just built, say so in the same conversation — the agent 
 - *"Make the second chart a line instead of bars."*
 - *"Filter it to the northern region."*
 
+## Time grain
+
+For anything plotted over time, say the level of detail you want and the agent builds the panel at that grain:
+
+- *"Revenue by month for the last 12 months."*
+- *"Daily active sessions for the last 30 days."*
+- *"Quarterly margin over three years."*
+
+<!-- Screenshot: ![A by-month trend panel with a date axis](images/dashboard-time-grain.png) -->
+
+The grain is part of the panel's saved recipe, so a board built *by month* stays by month on every refresh — it does not re-derive itself from whatever range you happen to be looking at.
+
+> [!TIP]
+> Name the grain explicitly rather than leaving it to be inferred. *"Sales over time"* leaves the agent to choose; *"sales by week for the last quarter"* does not. This is the same discipline that makes a question trustworthy — see [Asking good questions](asking-good-questions.md).
+
+Some measures are only valid at certain grains. The agent respects the levels your model declares, so a request at an invalid grain is refused rather than silently answered wrongly — see [valid grains](catalog.md) in the catalog.
+
 ## Editing the layout
 
 Click **Edit** on a saved board to rearrange it:
@@ -50,6 +67,8 @@ Click **Edit** on a saved board to rearrange it:
 - **Swap the chart type** per panel — bar, line, area, point, or arc.
 
 **Save** commits; **Cancel** discards. Editing requires write access to the board.
+
+Panels never overlap: adding one, resizing another, or letting the agent compose a board reflows the grid so every panel keeps its own space.
 
 ## Parameters and filtering
 
@@ -66,6 +85,12 @@ A live dashboard is visible to **members of its data project**. There is no per-
 
 > [!IMPORTANT]
 > **A board refreshes using the credential of whoever saved it.** Every project member therefore sees the same numbers — including, potentially, rows their own access to the BI platform would not have returned. This is deliberate, so that a shared board means the same thing to everyone looking at it, but it is worth knowing before you save a board built on a permissive account. Where per-person visibility matters, keep the analysis in [chat](chat.md) with [personal access](data-projects.md#who-can-query--shared-or-personal-access) connections.
+
+### The "runs as" label
+
+A board backed by a **shared** connection shows that connection's *"runs as"* label — for example *Sales shared account*. It names the identity the queries actually run under, so anyone reading the board knows whose access produced the numbers rather than assuming it was their own.
+
+The label is set when the connection is [published](connections/README.md#publishing-a-shared-connection), and publishing is a deliberate sign-off precisely because of this page: a shared connection turns one person's access into every viewer's. If that sign-off is [revoked](connections/README.md#revoking-a-publication), boards bound to the connection stop returning data until it is published again.
 
 ## Snapshots
 

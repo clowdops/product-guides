@@ -16,6 +16,11 @@ If your organisation is entitled to both, logging in lands you on the **product 
 | Guide | What it covers |
 | --- | --- |
 | [Account & Settings](common/settings.md) | Profile, security, organisation, members, plan, billing, usage, activity |
+| [Approvals](common/approvals.md) | Decide the actions an unattended run deferred to a person |
+| [Connections](common/connections.md) | The external systems your projects reach, and their observed health |
+| [Contacts](common/contacts.md) | The people your organisation knows — directory, lists, merges, and erasure |
+| [Packs](common/packs.md) | Durable conventions and files your organisation publishes into agent sessions |
+| [Signals](common/signals.md) | What is worth acting on — conditions rather than events |
 | [Referrals](common/referrals.md) | Invite other teams — both sides earn credit |
 
 ## Also here

@@ -47,9 +47,19 @@ These are on the BI platform, not in ClowdBI. Redact tenant names.
 | Filename | Page | What to capture |
 | --- | --- | --- |
 | `sidebar-overview.png` | [data-projects.md](../data-projects.md) | Sidebar — project selector, New chat, Data projects, Dashboards, conversation list |
-| `project-settings-ai.png` | [data-projects.md](../data-projects.md) | Project settings — AI provider selection and the BYOK card |
+| `project-settings-ai.png` | [data-projects.md](../data-projects.md) | The data project's **AI model** tab — provider selection and the BYOK card |
 | `chat-inline-dashboard.png` | [dashboards.md](../dashboards.md) | The inline dashboard card in a chat turn with **Save as dashboard** |
 | `links-panel.png` | [cross-dataset-links.md](../cross-dataset-links.md) | Links panel with a proposed link showing overlap evidence, and a confirmed one |
+
+## Citations, connections and grain
+
+| Filename | Page | What to capture |
+| --- | --- | --- |
+| `chat-citations.png` | [chat.md](../chat.md#citations-and-coverage) | An answer with inline `[1]` markers **and at least one ⚠ uncited fact**, with the coverage line beneath. The ⚠ is the point — a fully-cited example does not show what the line is for |
+| `evidence-panel.png` | [evidence.md](../evidence.md#the-evidence-panel) | The evidence panel open on a claim: the quoted claim, the recorded query, its result, and the pins line. Include the green **checked** marker if one is present |
+| `connections-tab.png` | [connections/README.md](../connections/README.md#managing-an-existing-connection) | The data project's **Connections** tab with at least two connections — one **Personal**, one **Shared / Published** with its runs-as label visible |
+| `connection-publish.png` | [connections/README.md](../connections/README.md#publishing-a-shared-connection) | The **Publish this connection** dialog, both fields filled with plausible demo values (*internal*, *Sales shared account*) |
+| `dashboard-time-grain.png` | [dashboards.md](../dashboards.md#time-grain) | A by-month trend panel with a readable date axis — 12 months of data, not 3 points |
 
 ## Also referenced
 

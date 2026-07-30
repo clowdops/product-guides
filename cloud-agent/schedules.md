@@ -13,7 +13,10 @@ Open the **Schedules** tab inside any sandbox to manage schedules.
 A schedule is a saved prompt that fires on a cron cadence. Each firing creates an **unattended chat session** — same capabilities, same audit trail as an interactive chat, with two differences:
 
 - There is no human to answer questions, so the agent cannot ask clarifying questions.
-- There is no human to approve confirmations, so any action that would normally prompt for confirmation is **denied** unless its category is explicitly pre-approved on the schedule.
+- There is no human to approve confirmations, so any action that would normally prompt for confirmation is **denied** unless its category is explicitly pre-approved on the schedule — or **deferred to a person**, if the action class is configured to gate rather than forbid.
+
+> [!NOTE]
+> A deferred action does not stop the run. The agent records exactly what it wanted to do, queues it in [Approvals](../common/approvals.md), and continues with the rest of the prompt. Somebody decides later, and approving runs precisely the payload that was recorded.
 
 ## Creating a schedule
 
@@ -103,6 +106,9 @@ Click the row's **Runs** action to see the latest firings; click a firing to ope
 
 > [!NOTE]
 > If a scheduled run is still in progress when the next tick fires, the next tick is **skipped** automatically to prevent overlapping executions.
+
+> [!TIP]
+> A run can finish successfully and still have left something for a person. Check [Approvals](../common/approvals.md) alongside the run status — a deferred action lives in that queue, not in the schedule's own history.
 
 ## Failure handling
 

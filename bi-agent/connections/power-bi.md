@@ -4,7 +4,7 @@
 
 **On this page:** [What you need](#what-you-need) · [Granting Build permission](#granting-build-permission) · [Connecting](#connecting) · [Picking datasets](#picking-datasets) · [What the agent can do](#what-the-agent-can-do) · [Troubleshooting](#troubleshooting)
 
-Power BI connects through **Microsoft sign-in** — you authorise ClowdBI as yourself, and it queries as you. There is no secret to create, paste, or rotate.
+Power BI connects through **Microsoft sign-in** — you authorise ClowdBI as yourself, and it queries as you. There is no secret to create, paste, or rotate, and consequently no connect form to edit: a Power BI connection is repaired by **Reconnect**, which re-runs the sign-in.
 
 ## What you need
 
@@ -69,7 +69,8 @@ Only datasets the connected account has Build on are queryable. A dataset visibl
 | Dataset list is empty | The account has no workspace access | Add it to the relevant workspace |
 | A specific dataset errors on query | Missing **Build** on that dataset | [Grant Build](#granting-build-permission) and retry |
 | *"the model has no measures"* | The account cannot enumerate measures, or the model genuinely defines none | Check Build permission first. If the model truly has no measures, the agent computes aggregates inline instead — this works, it just cannot use pre-defined business logic |
-| Queries fail after working for weeks | The refresh token was revoked (password change, admin revocation, conditional-access policy) | Reconnect |
+| Queries fail after working for weeks | The refresh token was revoked (password change, admin revocation, conditional-access policy) | Click **Reconnect** on the connection — see [Managing an existing connection](README.md#managing-an-existing-connection) |
+| Teammates get nothing from a shared connection | It has not been [published](README.md#publishing-a-shared-connection), or the publication was revoked | Publish it |
 
 > [!TIP]
 > If answers look wrong rather than failing, the cause is usually the model rather than the connection — see [Asking good questions](../asking-good-questions.md).

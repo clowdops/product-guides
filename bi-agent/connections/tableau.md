@@ -83,7 +83,10 @@ ClowdBI handles this by computing aggregates **inline**: asked for average order
 
 **Tableau PATs idle-expire — 15 days by default.** A token unused for that period stops working, and queries begin failing with authentication errors.
 
-If a connection that used to work starts failing, reconnect it with a fresh token. Regular use keeps a token alive; a project queried weekly will not hit this, one queried monthly might.
+If a connection that used to work starts failing, give it a fresh token: open the data project's **Connections** tab and click **Edit** on the connection. The connect form re-opens pre-filled, so you replace the token and keep everything else — including your dataset selection. Regular use keeps a token alive; a project queried weekly will not hit this, one queried monthly might.
+
+> [!TIP]
+> Editing is also the fix for a **wrong Site**. If the connection saved successfully but every query fails, the Site is the first thing to check — it is the segment after `/#/site/` in your Tableau URL, not the name of the PAT. See [Managing an existing connection](README.md#managing-an-existing-connection).
 
 > [!NOTE]
 > Power BI and Looker connections refresh automatically in the background. Tableau's idle-expiry is a platform behaviour ClowdBI cannot work around.
@@ -94,7 +97,8 @@ If a connection that used to work starts failing, reconnect it with a fresh toke
 | --- | --- | --- |
 | *"Couldn't connect Tableau"* | Wrong server URL, site, or an expired token | Check the site name (see the tip above) and create a fresh PAT |
 | Connects, but no data sources listed | The user cannot see any published data source | Check project permissions in Tableau |
-| Queries fail with authentication errors after weeks of working | PAT idle-expired | [Create a new PAT](#creating-a-personal-access-token) and reconnect |
+| Queries fail with authentication errors after weeks of working | PAT idle-expired | [Create a new PAT](#creating-a-personal-access-token), then **Edit** the connection and paste it in |
+| Teammates get nothing from a shared connection | It has not been [published](README.md#publishing-a-shared-connection), or the publication was revoked | Publish it |
 | *"Couldn't list datasets for this account."* | Missing **API Access** permission | Grant API Access on the data sources |
 | A data source you expect is missing | It is embedded in a workbook, not published | Publish the data source separately |
 | Answers use the wrong definition of a metric | No stored measures — see [above](#tableau-has-no-stored-measures) | State the definition in the question, or add a calculated field |

@@ -2,7 +2,7 @@
 
 # Chatting with the Agent
 
-**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [The plan checklist](#the-plan-checklist) · [Clarifying questions](#clarifying-questions) · [Confirming a sensitive action](#confirming-a-sensitive-action) · [Live cost & model badge](#live-cost--model-badge) · [Stopping a turn](#stopping-a-turn) · [Billing refusals](#billing-refusals) · [Notifications](#notifications) · [Leaving feedback](#leaving-feedback) · [Conversation history](#conversation-history)
+**On this page:** [Starting a conversation](#starting-a-conversation) · [What you see during a turn](#what-you-see-during-a-turn) · [The plan checklist](#the-plan-checklist) · [Clarifying questions](#clarifying-questions) · [Confirming a sensitive action](#confirming-a-sensitive-action) · [Live cost & model badge](#live-cost--model-badge) · [Active packs](#active-packs) · [Stopping a turn](#stopping-a-turn) · [Billing refusals](#billing-refusals) · [Notifications](#notifications) · [Drafting a document](#drafting-a-document) · [Teaching the agent a convention](#teaching-the-agent-a-convention) · [Recording who was involved](#recording-who-was-involved) · [Leaving feedback](#leaving-feedback) · [Conversation history](#conversation-history)
 
 Chat is the primary way to interact with ClowdOps. Every conversation runs within the currently selected sandbox, using the credentials, guardrails, and budget bound to it.
 
@@ -79,6 +79,17 @@ $0.07 / $5.00 · gpt-5.2
 - **Cap** is the per-chat-session budget that applies to this conversation (inherited from the sandbox, project, or org budget).
 - **Model** is picked automatically from the AI credentials attached to the sandbox: a provider-priority list intersected with which AI providers your sandbox has keys for. Change the picked model by adding or removing AI credentials in [Workspace & credentials](your-workspace.md).
 
+## Active packs
+
+Beside the guardrail chips, the chat header shows one chip per organisation [pack](../common/packs.md) active in this session — the name and the version, for example `deployment-conventions v3`.
+
+Hovering a chip says how it got there:
+
+- **bound by your org** — an administrator attached this pack to the scope, so every session here receives it.
+- **activated on demand** — the agent read the pack catalog and pulled this one in because it matched the task.
+
+A session that received no organisation packs shows no chips at all. Chips are how you tell whether the agent is working with your house conventions or without them — which is usually the first thing to check when it does something the team would not.
+
 ## Stopping a turn
 
 While the agent is working, the send button morphs into a **Stop** button (a red square). Click it to interrupt the turn:
@@ -108,6 +119,33 @@ The agent can push messages to a notification channel (Slack, Teams, PagerDuty, 
 - *"Email me the cost report when you're done."*
 
 The `notify` tool is only available when at least one notification channel is attached to the sandbox. To set one up, see [Credentials → Notification channels](your-workspace.md#notification-channels). For the full feature guide including severity routing, schedule digests, and setup, see [Notifications](notifications.md).
+
+## Drafting a document
+
+Ask the agent to write something down and it becomes an [artifact](artifacts.md) — a versioned document in the project, rather than text that scrolls away:
+
+- *"Draft a weekly digest of this week's findings."*
+- *"Write that up as an incident brief."*
+
+The artifact appears under the project's **Artifacts** tab, where it can be revised, compared version by version, and approved. Approving records that the content is agreed; sending it anywhere is always a separate step.
+
+> [!TIP]
+> Ask the agent to *revise* an existing artifact rather than draft a new one — *"update the weekly digest with today's findings"* — and you get a new version on the same document, with a diff you can read, instead of a second copy.
+
+## Teaching the agent a convention
+
+Anything you find yourself explaining twice belongs in a [pack](../common/packs.md). Say so in the conversation where you are explaining it:
+
+> *"Remember for future sessions: production deploys only happen Tuesday and Thursday, and always need a rollback plan attached."*
+
+The agent drafts a pack from what you said. It changes nothing yet — an administrator publishes it, and from then on sessions receive it automatically.
+
+## Recording who was involved
+
+When a conversation names a person — the owner of a system, the requester of a change, the contact for an escalation — the agent can record them in the shared [contact registry](../common/contacts.md), so the same person is recognised next time rather than re-identified from scratch.
+
+> [!IMPORTANT]
+> A contact record grants nobody any access. It is a directory entry, not an account. And note that what you *type* about a person in a conversation stays in the conversation — [erasing their contact record](../common/contacts.md#erasing-a-person) does not remove it.
 
 ## Leaving feedback
 

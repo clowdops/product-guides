@@ -30,6 +30,9 @@ Go to the ClowdBI sign-up page and register with your email and a password, or u
 After registering with email, check your inbox and click the verification link before continuing.
 
 > [!NOTE]
+> Sign-in is **shared across all of ClowdOps** and lives on one page for every product, so you may notice the address change while you authenticate. One account, one session: signing out of ClowdBI signs you out everywhere, and signing back in returns you to the product chooser. See [One sign-in for every product](../common/settings.md#one-sign-in-for-every-product).
+
+> [!NOTE]
 > If the sign-up page shows an **"Invite only"** message instead of the registration form, ClowdOps is running in private preview. Check your inbox for an invite link, or contact your team's administrator. If you already have an account, use the **Sign in** link instead.
 
 ### Step 2: Create your organisation
@@ -42,7 +45,7 @@ On first login, the onboarding wizard launches automatically. Enter your organis
 
 Pick which AI provider powers your agent. **Platform default (recommended)** uses Flashback's own keys and bills LLM usage to your credit balance — nothing to configure.
 
-If you would rather use your own AI account, choose the provider and supply an API key. You then pay that provider directly for tokens; ClowdOps bills only compute and a small metered fee. You can change this later per data project — see [Choosing the AI model](data-projects.md#choosing-the-ai-model).
+If you would rather use your own AI account, choose the provider and supply an API key. You then pay that provider directly for tokens; ClowdOps bills only compute and a small metered fee. You can change this later on any data project's **AI model** tab — see [Choosing the AI model](data-projects.md#choosing-the-ai-model).
 
 ### Step 4: Create your first data project
 

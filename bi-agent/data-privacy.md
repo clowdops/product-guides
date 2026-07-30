@@ -2,7 +2,7 @@
 
 # Data privacy & personal data
 
-**On this page:** [The data flow](#the-data-flow) · [What the AI model receives](#what-the-ai-model-receives) · [What it never receives](#what-it-never-receives) · [Where your credentials live](#where-your-credentials-live) · [The personal-data boundary](#the-personal-data-boundary) · [Working with sensitive entities](#working-with-sensitive-entities) · [When you type personal data yourself](#when-you-type-personal-data-yourself) · [Names on dashboards](#names-on-dashboards) · [Leaving your organisation](#leaving-your-organisation) · [The audit trail](#the-audit-trail) · [Known limits](#known-limits)
+**On this page:** [The data flow](#the-data-flow) · [What the AI model receives](#what-the-ai-model-receives) · [What it never receives](#what-it-never-receives) · [Where your credentials live](#where-your-credentials-live) · [The personal-data boundary](#the-personal-data-boundary) · [Working with sensitive entities](#working-with-sensitive-entities) · [When you type personal data yourself](#when-you-type-personal-data-yourself) · [Names on dashboards](#names-on-dashboards) · [Leaving your organisation](#leaving-your-organisation) · [The audit trail](#the-audit-trail) · [Known limits](#known-limits) · [Erasure requests](#erasure-requests)
 
 This page is the complete account of what ClowdBI sends where. If you are evaluating ClowdBI for data covered by GDPR, HIPAA, or an internal data-handling policy, this is the page to read — including [Known limits](#known-limits), which documents what the boundary does *not* catch.
 
@@ -188,7 +188,19 @@ No protection of this kind is perfect, and it is more useful to know where this 
 
 **Recognition depends on your column names.** A column called `attr_7` that happens to hold email addresses is treated as ordinary data, because nothing about it suggests otherwise. Clear column naming in your BI model does real work here.
 
-**Everyone on a dashboard sees the same numbers.** A saved board refreshes using the access of whoever saved it, so a colleague may see figures their own BI permissions would not have returned. See [Who can see a dashboard](dashboards.md#who-can-see-a-dashboard).
+**Everyone on a dashboard sees the same numbers.** A saved board refreshes using the access of whoever saved it, so a colleague may see figures their own BI permissions would not have returned. See [Who can see a dashboard](dashboards.md#who-can-see-a-dashboard). A shared connection must be [published](connections/README.md#publishing-a-shared-connection) before it backs a board at all, and the board then names the identity it runs as — but publishing is a sign-off, not a narrowing: once published, everyone sees what that account sees.
 
 > [!TIP]
 > One practice covers all of these: **connect models containing personal data only when you need to, and give sensitive records a reference code to be identified by.** These checks are a safety net for mistakes, not a reason to point the agent at your most sensitive tables.
+
+## Erasure requests
+
+When somebody asks to be erased, the [contact registry](../common/contacts.md#erasing-a-person) is where you run it. Three things about ClowdBI are worth knowing before you promise a completion date:
+
+**Your BI platform is not touched.** ClowdBI reads your models; it does not write to them. Erasing a person from the registry does not remove them from Power BI, Looker, or Tableau — that is a change to your source data, and it is yours to make. Once you do, the next query reflects it, because nothing is copied here.
+
+**Dashboards hold recipes, not rows.** A saved board stores the query, so once the person is gone from your source, they are gone from the board on its next refresh. No separate cleanup is needed.
+
+**Snapshots and exports do hold data.** A [snapshot](dashboards.md#snapshots) is frozen data by definition, and an export left your organisation entirely. Both must be dealt with separately — the [Activity log](#the-audit-trail) records every one that was created, which is what makes finding them possible.
+
+**What was typed into a conversation stays in the conversation.** If somebody named a customer in the composer, that text is in the chat history, not in any contact record, and erasure does not reach it. Delete the conversation if it matters.

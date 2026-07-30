@@ -2,7 +2,7 @@
 
 # Account & Settings
 
-**On this page:** [Profile](#profile) · [Security](#security) · [Organisation](#organisation) · [Members](#members) · [Deployments](#deployments) · [Plan](#plan) · [Billing](#billing) · [Usage](#usage) · [System notifications](#system-notifications) · [Referrals](#referrals) · [Activity](#activity)
+**On this page:** [Profile](#profile) · [Security](#security) · [Organisation](#organisation) · [Members](#members) · [Deployments](#deployments) · [Plan](#plan) · [Billing](#billing) · [Usage](#usage) · [Approvals](#approvals) · [Connections](#connections) · [Contacts](#contacts) · [Packs](#packs) · [Knowledge review](#knowledge-review) · [Signals](#signals) · [System notifications](#system-notifications) · [Referrals](#referrals) · [Activity](#activity)
 
 Settings are **shared across every ClowdOps product**. Your organisation, members, plan, credit balance, and spend dashboard are the same whether you are working in [ClowdInfra](../cloud-agent/README.md) or [ClowdBI](../bi-agent/README.md) — switching products does not change any of them.
 
@@ -22,6 +22,15 @@ Manage multi-factor authentication under **Security**:
 - Enrol a TOTP authenticator app or a passkey (WebAuthn)
 - Activate magic-link login as an alternative method
 - Review or revoke trusted devices
+
+### One sign-in for every product
+
+Authentication is shared. There is a **single sign-in page** for all of ClowdOps, hosted on the ClowdInfra origin — it is the address registered with Google and Microsoft, so it is the one place their sign-in buttons can work.
+
+Two consequences worth knowing:
+
+- **Signing out anywhere signs you out everywhere.** The session is shared across products, so ending it in ClowdBI ends it in ClowdInfra too.
+- **Signing out of ClowdBI returns you to the shared login page**, not to a ClowdBI-specific one. Sign back in there and you are returned to the [product hub](#product-entitlement).
 
 ## Organisation
 
@@ -59,6 +68,9 @@ Update or remove a member at any time from the Members list.
 An organisation is entitled to one or more products. When you have more than one, logging in lands you on the **product hub** — a chooser showing each product you can enter. If you only have one, you go straight into it.
 
 If a colleague reports *"ClowdBI isn't enabled for your organization yet"*, the product has not been enabled for your org — an administrator can turn it on.
+
+> [!NOTE]
+> The hub only offers what the server has confirmed you are entitled to. While that is still loading — or if the check cannot be completed — it shows just the product you are already in, rather than guessing. A product you expect but do not see for a moment is the hub waiting for an answer, not a change to your entitlement.
 
 ## Deployments
 
@@ -195,9 +207,67 @@ Child scopes inherit from parents: a child can be stricter than its parent but n
 | Sandbox / data project | Same as the parent project |
 | Chat session | Only the user who created the chat |
 
+## Approvals
+
+The queue where an **unattended run** deferred an action to a person. A scheduled run that reaches something needing a decision does not fail — it records exactly what it wanted to do, carries on with the rest of its work, and waits here.
+
+Counters show what is waiting, what expires within 24 hours, and what was executed or failed in the last week. Reading and resolving are open to any member.
+
+Full page: **[Approvals](approvals.md)**.
+
+## Connections
+
+The external systems your projects reach — a Power BI tenant, a Slack workspace, an SMTP host — with the health the platform has actually observed for each: *healthy*, *expiring*, *degraded*, *broken*, *unknown*, or *disabled*.
+
+Health comes from real deliveries and real token refreshes, never from a reachability poll. The list is scoped to the selected project.
+
+Full page: **[Connections](connections.md)**.
+
+## Contacts
+
+Three pages — **Contacts**, **Contact lists**, and **Contact settings** — holding your organisation's shared record of the people it knows about. A directory, not a login system: nothing here grants anyone access to anything.
+
+Contact settings is administrator-only and carries the organisation-wide sharing posture, the erasure-block override, and the change record.
+
+Full page: **[Contacts](contacts.md)**, including [data-subject erasure](contacts.md#erasing-a-person).
+
+## Packs
+
+Durable guidance and files your organisation publishes into its agent sessions, so house conventions do not have to be re-explained in every conversation. Any member can author a draft; publishing, binding and rollback are administrator actions.
+
+Full page: **[Packs](packs.md)**.
+
+## Knowledge review
+
+Administrator-only, and the entry appears only when something is waiting. This is where the platform proposes that two contact records are the same person, and an administrator confirms, flips, or rejects the merge.
+
+It is deliberately separate from [Approvals](#approvals): that queue decides whether the platform may *do* something, this one decides whether something it *believes* is true.
+
+Full page: **[Contacts → Knowledge review](contacts.md#knowledge-review)**.
+
+## Signals
+
+The attention queue: one record per **condition** worth acting on — a budget nearing its cap, a run of guardrail denials, a failing schedule, an unstable connection — rather than one row per event.
+
+Reading is open to every member; dismissing requires an administrator and a written reason.
+
+Full page: **[Signals](signals.md)**, including [how it differs from the activity log](signals.md#signals-vs-the-activity-log).
+
 ## System notifications
 
 Organisation administrators can configure where **platform-level** alerts are delivered — billing warnings, credit exhaustion, and similar account events. This is separate from the notification channels an agent uses mid-run to message your team.
+
+Each event type can be subscribed to independently:
+
+| Event type | What it sends |
+| --- | --- |
+| **Budget hits** | A budget cap (org / project / sandbox / chat) was reached |
+| **Guardrail denials** | A guardrail blocked an agent action |
+| **Run failures** | A chat or scheduled run ended in error |
+| **Signals** | The daily digest of what is worth acting on — new conditions, how many repeat sightings folded into the quiet ones, and what was dismissed |
+
+> [!NOTE]
+> The **Signals** row is a *summary*, not an alert channel. Immediate alerts still ride the event types above, and the [Signals](signals.md) page is there whether or not anyone subscribes to the digest.
 
 <img src="../cloud-agent/images/settings_system_notifications.png" alt="System notifications settings — channel configuration" width="100%">
 
@@ -208,6 +278,9 @@ Mint and track referral codes under **Settings → Referrals**. Both the referri
 ## Activity
 
 The **Activity** log shows an event history for your organisation: logins, configuration changes, member invites, credential updates, exports, and more. Use it for audit or compliance purposes.
+
+> [!NOTE]
+> Activity answers *what happened* — every occurrence, with your own read state. [Signals](signals.md) answers *what is worth acting on* — one record per condition, shared across the organisation, with a lifecycle. Signal-producing events appear in both; neither replaces the other.
 
 > [!TIP]
 > ClowdBI writes additional governance events here — snapshot creation, dashboard exports, external share links, and personal-data audit records. See [Data privacy & personal data](../bi-agent/data-privacy.md#the-audit-trail).

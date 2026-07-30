@@ -2,7 +2,7 @@
 
 # ClowdInfra — the cloud infrastructure agent (Preview)
 
-**[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Schedules](schedules.md)** · **[Notifications](notifications.md)** · **[Chats & history](chats.md)** · **[External agents (MCP)](mcp.md)** · **[Telegram](tg.md)** · **[Resources](resources.md)** · **[Guardrails & cost caps](guardrails.md)** · **[Account & settings](../common/settings.md)** · **[Referrals](../common/referrals.md)**
+**[Getting Started](getting-started.md)** · **[Workspace & credentials](your-workspace.md)** · **[Chat](chat.md)** · **[Schedules](schedules.md)** · **[Approvals](../common/approvals.md)** · **[Artifacts](artifacts.md)** · **[Packs](../common/packs.md)** · **[Notifications](notifications.md)** · **[Signals](../common/signals.md)** · **[Chats & history](chats.md)** · **[External agents (MCP)](mcp.md)** · **[Telegram](tg.md)** · **[Resources](resources.md)** · **[Guardrails & cost caps](guardrails.md)** · **[Account & settings](../common/settings.md)** · **[Referrals](../common/referrals.md)**
 
 ClowdOps is a chat-oriented interface for running AI agents against your cloud infrastructure. You describe a task in plain language, and the agent plans and executes it — querying resources, calling APIs, running code, and reasoning over results — all within the credentials, guardrails, and budget you define.
 
@@ -30,6 +30,12 @@ The right posture is to use both: scope credentials to the minimum your use case
 | **Agent access token** | A per-sandbox bearer (`fba_…`) that lets an external MCP client (Claude Code, Cursor, …) drive the sandbox's agent. See [Connect External Agents (MCP)](mcp.md). |
 | **Action category** | One of eight mutating categories (modify data, create resource, delete data, destroy resource, scale capacity, modify IAM, modify networking, run command on host). Read access is always allowed. |
 | **Budget** | A USD spend cap (daily / monthly / per-chat) that applies hierarchically from org down to sandbox and chat. |
+| **Pending action** | An action an unattended run deferred to a person rather than performing or abandoning. Waits in the [Approvals](../common/approvals.md) queue. |
+| **Pack** | Durable guidance and files your organisation publishes into agent sessions, so conventions do not have to be re-explained. See [Packs](../common/packs.md). |
+| **Artifact** | A versioned, approvable document held in a project — a digest, brief or report. See [Artifacts](artifacts.md). |
+| **Connection** | The external system behind one or more credentials, with health derived from real use. See [Connections](../common/connections.md). |
+| **Signal** | One record per condition worth acting on, with a lifecycle and a signed dismissal. See [Signals](../common/signals.md). |
+| **Contact** | A person your organisation knows about, in the shared [contact registry](../common/contacts.md). Not an account — it grants nothing. |
 
 ## Guides
 
@@ -39,6 +45,12 @@ The right posture is to use both: scope credentials to the minimum your use case
 | [Projects, Sandboxes & Credentials](your-workspace.md) | Organise your work and connect your keys |
 | [Chatting with the Agent](chat.md) | Start conversations, follow live plans, stop turns, approve sensitive actions |
 | [Scheduled Runs](schedules.md) | Run prompts unattended on a cron schedule |
+| [Approvals](../common/approvals.md) | Decide the actions an unattended run deferred to a person *(shared across products)* |
+| [Artifacts](artifacts.md) | Draft, revise and approve documents the agent produces |
+| [Packs](../common/packs.md) | Publish durable conventions and files into agent sessions *(shared across products)* |
+| [Connections](../common/connections.md) | See what your credentials actually reach, and its observed health *(shared across products)* |
+| [Signals](../common/signals.md) | The attention queue: conditions worth acting on *(shared across products)* |
+| [Contacts](../common/contacts.md) | The people your organisation knows, and how to erase one *(shared across products)* |
 | [Chats & History](chats.md) | Audit every chat session — interactive or scheduled |
 | [Connect External Agents (MCP)](mcp.md) | Drive a sandbox from Claude Code, Cursor, Codex, or VS Code |
 | [Telegram](tg.md) | Get the agent's messages in Telegram and drive a sandbox by chatting with the bot |

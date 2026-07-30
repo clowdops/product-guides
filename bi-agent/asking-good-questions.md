@@ -22,6 +22,17 @@ That is the whole discipline. The query shows which measure was used, how it fil
 
 If the number matches what you expected, you rarely need it. If it does not, the query almost always explains why.
 
+> [!TIP]
+> The [citation marker](evidence.md) beside a specific number is the same habit at finer grain: it takes you to the query behind *that claim* rather than behind the answer as a whole. Use the marker when one figure looks wrong, **Show query** when the whole answer does.
+
+### What citations do and do not settle
+
+The [coverage line](evidence.md#the-coverage-line) under every answer tells you how much of it is grounded — and it is worth being precise about what that buys you.
+
+A citation proves a number came from a query you can read. It does **not** prove the query was the right one. Of the four failure modes below, citations reliably expose the first; the other three produce a perfectly cited answer that is still wrong, because the query ran correctly against the wrong thing.
+
+So: treat *"all facts cited"* as *"nothing was invented"*, not as *"this is the answer you wanted."*
+
 ## Four ways a good-looking answer is wrong
 
 ### 1. The empty column

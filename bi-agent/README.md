@@ -2,9 +2,9 @@
 
 # ClowdBI — the business-intelligence agent (Preview)
 
-**[Getting Started](getting-started.md)** · **[Data projects](data-projects.md)** · **[Connecting a BI source](connections/README.md)** · **[The catalog](catalog.md)** · **[Asking questions](chat.md)** · **[Dashboards](dashboards.md)** · **[Cross-dataset links](cross-dataset-links.md)** · **[Data privacy](data-privacy.md)** · **[Asking good questions](asking-good-questions.md)** · **[Account & settings](../common/settings.md)**
+**[Getting Started](getting-started.md)** · **[Data projects](data-projects.md)** · **[Connecting a BI source](connections/README.md)** · **[The catalog](catalog.md)** · **[Asking questions](chat.md)** · **[Evidence & citations](evidence.md)** · **[Dashboards](dashboards.md)** · **[Cross-dataset links](cross-dataset-links.md)** · **[Data privacy](data-privacy.md)** · **[Asking good questions](asking-good-questions.md)** · **[Account & settings](../common/settings.md)**
 
-ClowdBI lets you talk to your BI. Connect the semantic models you already maintain — Power BI datasets, Looker explores, Tableau published data sources — and ask questions in plain language. The agent grounds every answer on your own measures, entities, and relationships, shows you the query it ran, and can turn any answer into a live dashboard.
+ClowdBI lets you talk to your BI. Connect the semantic models you already maintain — Power BI datasets, Looker explores, Tableau published data sources — and ask questions in plain language. The agent grounds every answer on your own measures, entities, and relationships, [cites each factual claim back to the query behind it](evidence.md), and can turn any answer into a live dashboard.
 
 It is not a new BI tool and it does not copy your data anywhere. It reads the model you already built and asks it questions on your behalf.
 
@@ -76,6 +76,8 @@ This is why ClowdBI has none of the "which actions is the agent allowed to take"
 | **Cross-dataset link** | A validated declaration that two models share an entity, letting the agent answer questions spanning both. |
 | **Dashboard** | A living board of panels. Stores the query recipe, not the data — every open re-runs against current data. |
 | **Snapshot** | A frozen copy of a dashboard's data at a moment in time. The only thing you can meaningfully share outside your organisation. |
+| **Published connection** | A shared connection an owner has explicitly signed off for viewer use, carrying a data classification and a *"runs as"* label. Until it is published, nobody queries through it. |
+| **Citation** | The link from a factual sentence in an answer back to the query that produced it. See [Evidence & citations](evidence.md). |
 
 ## Guides
 
@@ -86,11 +88,17 @@ This is why ClowdBI has none of the "which actions is the agent allowed to take"
 | [Connecting a BI source](connections/README.md) | Step-by-step setup for Power BI, Looker, and Tableau — including what to configure on their side |
 | [The catalog](catalog.md) | What the agent knows about your models, how discovery works, and how to refresh it |
 | [Asking questions](chat.md) | Conversations, result views, showing the query, exporting, and conversation history |
+| [Evidence & citations](evidence.md) | How each factual claim links back to the query behind it, and what the coverage line tells you |
 | [Dashboards](dashboards.md) | Build a board in chat, save it, edit the layout, parameters, snapshots, sharing, and export |
 | [Cross-dataset links](cross-dataset-links.md) | Answer questions that span two datasets, and confirm the joins that back them |
 | [Data privacy & personal data](data-privacy.md) | The full data-flow model, the personal-data boundary, the audit trail, and the known limits |
 | [Asking good questions](asking-good-questions.md) | How to phrase a question you can trust — and the four ways a plausible-looking answer goes wrong |
 | [Account & Settings](../common/settings.md) | Members, billing, plan, usage, and activity *(shared across products)* |
+| [Contacts](../common/contacts.md) | The people your organisation knows, and how to erase one *(shared across products)* |
+| [Signals](../common/signals.md) | The attention queue: conditions worth acting on *(shared across products)* |
+| [Connections](../common/connections.md) | The observed health of everything your credentials reach *(shared across products)* |
+| [Approvals](../common/approvals.md) | Actions an unattended run deferred to a person *(shared across products)* |
+| [Packs](../common/packs.md) | Durable conventions published into agent sessions *(shared across products)* |
 
 ## Supported BI platforms
 
